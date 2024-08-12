@@ -1,5 +1,4 @@
 from redis import Redis
-import glob
 
 def get_data(self, key):
     data = self.get(str(key))
@@ -20,8 +19,6 @@ class RedisDB:
                 password="MgX2INYxyA8S5lCvZCtuITmmDkgmpPbi",
                 port=int(PORT),
                 decode_responses=True,
-                socket_timeout=5,
-                retry_on_timeout=True,
             )
         self.set = self.db.set
         self.get = self.db.get
