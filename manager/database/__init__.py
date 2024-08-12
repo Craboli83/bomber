@@ -12,12 +12,12 @@ def get_data(self, key):
 
 class RedisDB:
     def __init__(self):
-        MainUrl = "redis-12319.c59.eu-west-1-2.ec2.cloud.redislabs.com:12319"
+        MainUrl = "redis-10247.c59.eu-west-1-2.ec2.redns.redis-cloud.com:10247"
         URL = (MainUrl).split(":")[0]
         PORT = (MainUrl).split(":")[-1]
         self.db = Redis(
                 host=URL,
-                password="HvKZ7FppsNWScMFwdV07Q24EeNZHezPT",
+                password="MgX2INYxyA8S5lCvZCtuITmmDkgmpPbi",
                 port=int(PORT),
                 decode_responses=True,
                 socket_timeout=5,
