@@ -1,6 +1,6 @@
 telethon
 pyrogram
-tgcrypto
+redis[hiredis]
 requests
 redis
 bs4
