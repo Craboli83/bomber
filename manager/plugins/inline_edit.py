@@ -15,6 +15,7 @@ import random
 @Callback(data="yesedit\:(.*)")
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
+    flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = await TClient(session)
     if not client:
@@ -24,7 +25,6 @@ async def yesedit(event):
     fake = Faker()
     if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
         if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
-            flag = get_flag(phone)
             fname = str(flag) + " " + fake.first_name()
         else:
             fname = fake.first_name()
@@ -34,7 +34,6 @@ async def yesedit(event):
             pass
     if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
         if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
-            flag = get_flag(phone)
             lname = fake.last_name() + " " + str(flag)
         else:
             lname = fake.last_name()
@@ -75,6 +74,7 @@ __❗ Dont Delete This Menu!__
 @Callback(data="noedit\:(.*)")
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
+    flag = get_flag(phone)
     await event.edit(f"**✅ Account Not Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__", buttons=main_menu(event))
     menu = manage_menu(phone)
     await event.reply(f"""
