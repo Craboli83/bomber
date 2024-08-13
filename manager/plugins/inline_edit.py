@@ -1,5 +1,6 @@
 from manager import bot, LOG_GROUP
-from telethon import events, Button
+from manager.events import Callback
+from telethon import Button
 from manager.functions import TClient
 from manager.database import DB
 from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
@@ -11,7 +12,7 @@ import re
 import requests
 import random
 
-@bot.on(events.CallbackQuery(data=re.compile("yesedit\:(.*)")))
+@Callback(data="yesedit\:(.*)")
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
@@ -69,7 +70,7 @@ __❗ Dont Delete This Menu!__
 """, buttons=menu)
     await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( `{phone}` )\n**🆔 UserID:** ( `{event.sender_id}` )")
     
-@bot.on(events.CallbackQuery(data=re.compile("noedit\:(.*)")))
+@Callback(data="noedit\:(.*)")
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     await event.edit(f"**✅ Account Not Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__", buttons=main_menu(event))
