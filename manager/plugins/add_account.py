@@ -3,7 +3,7 @@ from manager.events import Cmd
 from telethon import TelegramClient, Button
 from telethon.sessions import StringSession
 from manager.database import DB
-from manager.functions import get_flag
+from manager.functions import TClient, get_flag
 from . import main_menu, back_menu
 from telethon.errors import (
     PhoneNumberInvalidError,
@@ -117,4 +117,13 @@ async def add_session(event):
     myinfo = await client.get_me()
     phone = myinfo.phone
     flag = get_flag(phone)
-    await edit.edit(f"{str(myinfo)}\n\n{phone}\n\n{flag}", buttons=main_menu(event))
+    allaccs = DB.get_key("USER_ACCS")[event.sender_id]
+    if phone not in allaccs:
+        all = DB.get_key("USER_ACCS_COUNT")
+        all[event.sender_id] += 1
+        DB.set_key("USER_ACCS_COUNT", all)
+    allaccs = DB.get_key("USER_ACCS")
+    allaccs[event.sender_id][phone] = session
+    DB.set_key("USER_ACCS", allaccs)
+    buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
+    await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
