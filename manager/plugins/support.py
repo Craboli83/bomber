@@ -1,6 +1,6 @@
 from manager import bot, LOG_GROUP
-from manager.events import Cmd
-from telethon import events, Button
+from manager.events import Cmd, Callback
+from telethon import Button
 from . import main_menu, back_menu, manage_menu
 from manager.database import DB
 import re
@@ -17,7 +17,7 @@ async def support(event):
     await send.reply(f"**#New_Message**\n\n**🆔 UserID:** ( `{event.sender_id}` )", buttons=buttons)
     await response.reply(f"**✅ Your Message Successfuly Sended To Support!**\n\n__❗ Please Wait For Reponse!__", buttons=main_menu(event))
 
-@bot.on(events.CallbackQuery(data=re.compile("response\:(.*)")))
+@Callback(data="response\:(.*)")
 async def ressupport(event):
     id = int(event.pattern_match.group(1).decode('utf-8'))
     async with bot.conversation(LOG_GROUP) as conv:
