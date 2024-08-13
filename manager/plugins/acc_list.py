@@ -14,6 +14,7 @@ async def myaccs(event):
         count = 1
         for acc in accs:
             flag = get_flag(acc)
+            session = accs[acc]
             client = await TClient(session)
             status = "✅" if client else "❌"
             text += f"**{count} {flag} -** `{acc}` ( `{status}` )\n"
@@ -24,6 +25,7 @@ async def myaccs(event):
         count = 1
         for acc in accs:
             flag = get_flag(acc)
+            session = accs[acc]
             client = await TClient(session)
             status = "✅" if client else "❌"
             text += f"{count} {flag} - {acc} ( {status} )\n"
