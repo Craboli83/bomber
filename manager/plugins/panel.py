@@ -1,6 +1,6 @@
 from manager import bot, LOG_GROUP
-from manager.events import Cmd
-from telethon import events, Button
+from manager.events import Cmd, Callback
+from telethon import Button
 from . import main_menu, back_menu, panel_menu
 from manager.database import DB
 import re
@@ -10,7 +10,7 @@ import asyncio
 async def panel(event):
     await event.reply(f"**👋 Hi {bot.admin.first_name}!**\n\n**💠 Welcome To Admin Panel!**\n\n__❗ Use This Buttons!__", buttons=panel_menu())
 
-@bot.on(events.CallbackQuery(data="onoff"))
+@Callback(data="onoff")
 async def change_status(event):
     status = "off" if DB.get_key("BOT_STATUS") == "on" else "on"
     DB.set_key("BOT_STATUS", status)
@@ -18,7 +18,7 @@ async def change_status(event):
     status = "Actived ✅" if DB.get_key("BOT_STATUS") == "on" else "DeActived ❌"    
     await event.reply(f"**❗ The Bot Has Been Successfully {status}!**")
 
-@bot.on(events.CallbackQuery(data="sendtoall"))
+@Callback(data="sendtoall")
 async def sendtoall(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**💡 Please Send Your Message To Be Sent For Bot Users:**", buttons=back_menu)
@@ -33,21 +33,22 @@ async def sendtoall(event):
         await asyncio.sleep(0.2)
     await response.reply(f"**✅ Your Message Successfuly Sended To** `{count}` **User From** `{len(users)}` **Users!**", buttons=main_menu(event))
 
-@bot.on(events.CallbackQuery(data="getusers"))
+@Callback(data="getusers")
 async def sendtoall(event):
     users = DB.get_key("BOT_USERS")
+    acccount = DB.get_key("USER_ACCS_COUNT")
     if len(users) < 100:
         text = f"**📝 Bot Users:** ( `{len(users)}` )\n\n"
         count = 1
         for user in users:
-            text += f"**{count} -** `{user}` ( `{len(users[user])}` )\n"
+            text += f"**{count} -** `{user}` ( `{acccount[user]}` )\n"
             count += 1
         await event.reply(text)
     else:
         text = f"📝 Bot Users: ( {len(users)} )\n\n"
         count = 1
         for user in users:
-            text += f"{count} - {user} ( {len(users[user])} )\n"
+            text += f"{count} - {user} ( {acccount[user]} )\n"
             count += 1
         open("users.txt", "w").write(text)
         await event.reply("**📝 Bot Users!**", file="users.txt") 
