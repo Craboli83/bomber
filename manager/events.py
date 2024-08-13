@@ -116,10 +116,10 @@ def Cmd(
                 CHANGE_ACCS_BIO.update({event.sender_id: "yes"})
                 DB.set_key("CHANGE_ACCS_BIO", CHANGE_ACCS_BIO)
 
-            CHANGE_ACCS_USERNAME = DB.get_key("CHANGE_ACCS_USERNAME") or {}
-            if event.sender_id not in CHANGE_ACCS_USERNAME:                 
-                CHANGE_ACCS_USERNAME.update({event.sender_id: "yes"})
-                DB.set_key("CHANGE_ACCS_USERNAME", CHANGE_ACCS_USERNAME)
+            CHANGE_ACCS_FLAG = DB.get_key("CHANGE_ACCS_FLAG") or {}
+            if event.sender_id not in CHANGE_ACCS_FLAG:                 
+                CHANGE_ACCS_FLAG.update({event.sender_id: "yes"})
+                DB.set_key("CHANGE_ACCS_FLAG", CHANGE_ACCS_FLAG)
 
             CHANGE_ACCS_PHOTO = DB.get_key("CHANGE_ACCS_PHOTO") or {}
             if event.sender_id not in CHANGE_ACCS_PHOTO:                 
