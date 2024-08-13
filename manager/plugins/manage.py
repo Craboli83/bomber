@@ -1,12 +1,13 @@
 from manager import bot, LOG_GROUP
-from telethon import events, functions, Button
+from manager.events import Callback
+from telethon import functions, Button
 from manager.functions import TClient
 from manager.database import DB
 from manager.functions import get_flag
 import re
 import os
 
-@bot.on(events.CallbackQuery(data=re.compile("delacc\:(.*)")))
+@Callback(data="delacc\:(.*)")
 async def logout(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
@@ -20,7 +21,7 @@ async def logout(event):
     DB.set_key("USER_ACCS", allaccs)
     await event.edit(f"**✅ This Account Successfuly Deleted From Accounts List!**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )")
 
-@bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
+@Callback(data="logout\:(.*)")
 async def logout(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
@@ -41,7 +42,7 @@ async def logout(event):
     DB.set_key("USER_ACCS", allaccs)
     await event.edit(f"**🚫 Im LogOut From Your Account!**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )")
 
-@bot.on(events.CallbackQuery(data=re.compile("getcodes\:(.*)")))
+@Callback(data="getcodes\:(.*)")
 async def getcodes(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
@@ -60,7 +61,7 @@ async def getcodes(event):
                 count += 1
     await bot.send_message(event.chat_id, codes)
 
-@bot.on(events.CallbackQuery(data=re.compile("resauths\:(.*)")))
+@Callback(data="resauths\:(.*)")
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
@@ -78,7 +79,7 @@ async def getauths(event):
             cur += 1
     await event.answer(f"❗ {cur} Session From {all} Sessions Has Been Terminated!", alert=True)
 
-@bot.on(events.CallbackQuery(data=re.compile("getauths\:(.*)")))
+@Callback(data="getauths\:(.*)")
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
@@ -112,7 +113,7 @@ async def getauths(event):
             text += "\n\n__❗ This Is My Self And Connot Terminate This Session!__"
         await event.reply(text, buttons=buttons)
 
-@bot.on(events.CallbackQuery(data=re.compile("terses\:(.*)\:(.*)")))
+@Callback(data="terses\:(.*)\:(.*)")
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     hash = int(event.pattern_match.group(2).decode('utf-8'))
@@ -131,7 +132,7 @@ async def getauths(event):
         else:
             await event.edit(f"**🚫 This Session Not Available For Your Account:** ( {flag} `{phone}` {flag} )")
 
-@bot.on(events.CallbackQuery(data=re.compile("sestel\:(.*)")))
+@Callback(data="sestel\:(.*)")
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
