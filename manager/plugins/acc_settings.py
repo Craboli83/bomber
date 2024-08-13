@@ -29,11 +29,11 @@ async def change_set(event):
         last = "no" if all[event.sender_id] == "yes" else "yes"
         all[event.sender_id] = last
         DB.set_key("CHANGE_ACCS_BIO", all)
-    elif type == "uname":
-        all = DB.get_key("CHANGE_ACCS_USERNAME")
+    elif type == "flag":
+        all = DB.get_key("CHANGE_ACCS_FLAGE")
         last = "no" if all[event.sender_id] == "yes" else "yes"
         all[event.sender_id] = last
-        DB.set_key("CHANGE_ACCS_USERNAME", all)
+        DB.set_key("CHANGE_ACCS_FLAGE", all)
     elif type == "photo":
         all = DB.get_key("CHANGE_ACCS_PHOTO")
         last = "no" if all[event.sender_id] == "yes" else "yes"
