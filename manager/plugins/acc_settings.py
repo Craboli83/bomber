@@ -1,6 +1,6 @@
 from manager import bot, LOG_GROUP
 from telethon import events, Button
-from manager.events import Cmd
+from manager.events import Cmd, Callback
 from manager.database import DB
 from . import setting_menu
 import re
@@ -10,7 +10,7 @@ import random
 async def acc_settings(event):
     await event.reply(f"**✅ Welcome To Setting Panel For Your Accounts:**\n\n__✏️ Edit Your Change Account Settings:__", buttons=setting_menu(event))
 
-@bot.on(events.CallbackQuery(data=re.compile("ch\_(.*)\:(.*)")))
+@Callback(data="ch\_(.*)\:(.*)")
 async def change_set(event):
     type = str(event.pattern_match.group(1).decode('utf-8'))
     id = str(event.pattern_match.group(2).decode('utf-8'))
