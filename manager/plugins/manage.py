@@ -42,6 +42,15 @@ async def logout(event):
     DB.set_key("USER_ACCS", allaccs)
     await event.edit(f"**🚫 Im LogOut From Your Account!**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )")
 
+@Callback(data="delacc\:(.*)")
+async def deleteacc(event):
+    phone = str(event.pattern_match.group(1).decode('utf-8'))
+    flag = get_flag(phone)
+    allaccs = DB.get_key("USER_ACCS")
+    del allaccs[event.sender_id][phone]
+    DB.set_key("USER_ACCS", allaccs)
+    await event.edit(f"**🚫 Your Account Was Deleted From Bot!**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )")
+
 @Callback(data="getcodes\:(.*)")
 async def getcodes(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
