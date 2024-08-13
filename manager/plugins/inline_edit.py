@@ -58,7 +58,7 @@ async def yesedit(event):
             os.remove("photo.jpg")
         except:
             pass
-    await event.edit(f"**✅ Account Successfuly Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__", buttons=main_menu(event))
+    await event.edit(f"**✅ Account Successfuly Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__")
     menu = manage_menu(phone)
     await event.reply(f"""
 **#Manage_Menu**
@@ -69,12 +69,13 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
+    await event.edit(buttons=main_menu(event))
 
 @Callback(data="noedit\:(.*)")
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
-    await event.edit(f"**✅ Account Not Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__", buttons=main_menu(event))
+    await event.edit(f"**✅ Account Not Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__")
     menu = manage_menu(phone)
     await event.reply(f"""
 **#Manage_Menu**
@@ -85,3 +86,4 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
+    await event.edit(buttons=main_menu(event))
