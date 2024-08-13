@@ -20,7 +20,7 @@ back_menu = [
 
 def manage_menu(phone):
     menu = [
-        [Button.inline("❗ LogOut Bot ❗", data=f"logout:{phone}")],
+        [Button.inline("❗ LogOut Bot ❗", data=f"logout:{phone}"), Button.inline("🚫 Delete 🚫", data=f"delacc:{phone}")],
         [Button.inline("❌ Reset Authorizations ❌", data=f"resauths:{phone}")],
         [Button.inline("🧾 Get Authorizations 🧾", data=f"getauths:{phone}"), Button.inline("📋 Get Telegram Codes 📋", data=f"getcodes:{phone}")],
         [Button.inline("📝 Get Telethon Session 📝", data=f"sestel:{phone}")],
