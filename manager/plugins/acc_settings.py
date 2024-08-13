@@ -1,5 +1,5 @@
 from manager import bot, LOG_GROUP
-from telethon import events, Button
+from telethon import Button
 from manager.events import Cmd, Callback
 from manager.database import DB
 from . import setting_menu
