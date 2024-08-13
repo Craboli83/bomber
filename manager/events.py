@@ -139,3 +139,20 @@ def Cmd(
         bot.add_event_handler(wrapper, events.NewMessage(pattern=pattern, **kwargs))
         return wrapper
     return decorator
+
+def Callback(
+    data=None,
+    **kwargs,
+):
+    if data:
+        data = re.compile(data)
+    def decorator(func):
+        async def wrapper(event):
+            try:
+                await func(event)
+            except:
+                error = format_exc()
+                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**💡 Error:** ( `{error}` )")
+        bot.add_event_handler(wrapper, events.CallbackQuery(data=data, **kwargs))
+        return wrapper
+    return decorator
