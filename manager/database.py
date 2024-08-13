@@ -83,10 +83,15 @@ class LocalDB:
 
     def get_key(self, key):
         if key in self.cache:
-            return self.cache[key]
-        value = self._get_data(key)
-        self.cache.update({key: value})
-        return value
+            value = self.cache[key]
+        else:
+            value = self._get_data(key)
+            self.cache.update({key: value})
+        try:
+            data = eval(value)
+        except:
+            data = value
+        return data
 
     def recache(self):
         self.cache.clear()
