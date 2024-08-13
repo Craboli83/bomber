@@ -69,8 +69,7 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )\n**🆔 UserID:** ( `{event.sender_id}` )")
-    
+
 @Callback(data="noedit\:(.*)")
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
@@ -86,4 +85,3 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )\n**🆔 UserID:** ( `{event.sender_id}` )")
