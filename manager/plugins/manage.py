@@ -112,7 +112,7 @@ async def getauths(event):
 **• Platform:** ( `{acc.platform}` )
 **• App Name:** ( `{acc.app_name}` )
 **• App Version:** ( `{acc.app_version}` )
-**• Country:** ( `{acc.country}` - `{acc.ip}` )
+**• Country:** ( `{acc.country}` )
 **• Official App:** ( `{"✅" if acc.official_app else "❌"}` )
 **• This Bot App:** ( `{"✅" if acc.current else "❌"}` )
 """
@@ -139,7 +139,7 @@ async def getauths(event):
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
             await event.edit(f"**✅ This Session Has Been Terminated From Your Account:** ( {flag} `{phone}` {flag} )")
         else:
-            await event.edit(f"**🚫 This Session Not Available For Your Account:** ( {flag} `{phone}` {flag} )")
+            await event.edit(f"**🚫 Can't Terminate This Session From Your Account:** ( {flag} `{phone}` {flag} )")
 
 @Callback(data="sestel\:(.*)")
 async def getauths(event):
