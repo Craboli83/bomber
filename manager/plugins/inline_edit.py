@@ -23,7 +23,8 @@ async def yesedit(event):
     await client.connect()
     fake = Faker()
     if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
-        if DB.get_key("CHANGE_ACCS_FLAGE")[event.sender_id] == "yes":
+        if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
+            flag = get_flag(phone)
             fname = str(flag) + fake.first_name()
         else:
             fname = fake.first_name()
@@ -32,7 +33,8 @@ async def yesedit(event):
         except:
             pass
     if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
-        if DB.get_key("CHANGE_ACCS_FLAGE")[event.sender_id] == "yes":
+        if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
+            flag = get_flag(phone)
             lname = fake.last_name() + str(flag)
         else:
             lname = fake.last_name()
