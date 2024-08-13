@@ -1,9 +1,9 @@
 from manager import bot
-from telethon import events
+from manager.functions import Callback
 from manager.database import DB
 import re
 
-@bot.on(events.CallbackQuery(data=re.compile("block\:(.*)")))
+@Callback(data="block\:(.*)")
 async def block(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     blocks = DB.get_key("BLOCK_USERS")
@@ -15,7 +15,7 @@ async def block(event):
     else:
         await event.edit(f"**🚫 This User** ( `{userid}` ) **Already Blocked From Bot!**")
 
-@bot.on(events.CallbackQuery(data=re.compile("unblock\:(.*)")))
+@Callback(data="unblock\:(.*)")
 async def block(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     blocks = DB.get_key("BLOCK_USERS")
