@@ -9,9 +9,9 @@ import base64
 import time
 import requests 
 
-async def TClient(ses):
+async def TClient(session):
     try:
-        client = TelegramClient(StringSession(ses), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="AccManager 🔐")
+        client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="AccManager 🔐")
     except:
         return False
     await client.connect()
