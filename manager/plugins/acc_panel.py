@@ -4,6 +4,7 @@ from telethon import Button
 from manager.functions import TClient
 from . import main_menu, back_menu, manage_menu
 from manager.database import DB
+from manager.functions import get_flag
 
 @Cmd(pattern="Account Panel 🛠️")
 async def acc_panel(event):
@@ -23,10 +24,11 @@ async def acc_panel(event):
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await edit.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     menu = manage_menu(phone)
+    flag = get_flag(phone)
     await edit.edit(f"""
 **#Manage_Menu**
 
-**📱 Phone:** ( `{phone}` )
+**📱 Phone:** ( {flag} `{phone}` {flag} )
 
 __❗ Dont Delete This Menu!__
 
