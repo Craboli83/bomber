@@ -2,6 +2,8 @@ telethon
 pyrogram
 redis
 localdb.json
+Faker
+pycountry
 requests
 redis
 bs4
