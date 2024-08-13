@@ -1,6 +1,7 @@
 telethon
 pyrogram
-redis[hiredis]
+redis
+localdb.json
 requests
 redis
 bs4
