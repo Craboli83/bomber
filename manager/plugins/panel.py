@@ -40,14 +40,14 @@ async def sendtoall(event):
         text = f"**📝 Bot Users:** ( `{len(users)}` )\n\n"
         count = 1
         for user in users:
-            text += f"**{count} -** `{user}`\n"
+            text += f"**{count} -** `{user}` ( `{len(users[user])}` )\n"
             count += 1
         await event.reply(text)
     else:
         text = f"📝 Bot Users: ( {len(users)} )\n\n"
         count = 1
         for user in users:
-            text += f"{count} - {user}\n"
+            text += f"{count} - {user} ( {len(users[user])} )\n"
             count += 1
         open("users.txt", "w").write(text)
         await event.reply("**📝 Bot Users!**", file="users.txt") 
