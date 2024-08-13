@@ -2,6 +2,7 @@ from manager import bot, LOG_GROUP
 from telethon import events, Button
 from manager.events import Cmd
 from manager.database import DB
+from manager.functions import get_flag
 import re
 
 @Cmd(pattern="Accounts List 📋")
@@ -13,14 +14,16 @@ async def myaccs(event):
         text = f"**📋 Your Accounts List:**\n**💡 Count:** ( `{len(accs)}` )\n\n"
         count = 1
         for acc in accs:
-            text += f"**{count} -** `{acc}`\n"
+            flag = get_flag(acc)
+            text += f"**{count} {flag} -** `{acc}`\n"
             count += 1
         await event.reply(text)
     else:
-        text = "📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
+        text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
         count = 1
         for acc in accs:
-            text += f"{count} - {acc}\n"
+            flag = get_flag(acc)
+            text += f"{count} {flag} - {acc}\n"
             count += 1
         open(f"{event.sender_id}.txt", "w").write(str(text))
         text = f"**📋 Your Accounts List:**\n\n**💡 Count:** ( `{len(accs)}` )"
