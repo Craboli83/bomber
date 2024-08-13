@@ -10,7 +10,10 @@ import time
 import requests 
 
 async def TClient(ses):
-    client = TelegramClient(StringSession(ses), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="AccManager 🔐")
+    try:
+        client = TelegramClient(StringSession(ses), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="AccManager 🔐")
+    except:
+        return False
     await client.connect()
     get = await client.get_me()
     if not get:
