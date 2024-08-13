@@ -110,6 +110,8 @@ async def add_session(event):
         return await edit.edit("**❌ Your Telethon Session String Is Invalid!**", buttons=main_menu(event)) 
     myinfo = await client.get_me()
     phone = "+" + str(myinfo.phone)
+    if not phone:
+        return await edit.edit("**❌ Your Telethon Session String Is Not For A User!**", buttons=main_menu(event)) 
     flag = get_flag(phone)
     allaccs = DB.get_key("USER_ACCS")[event.sender_id]
     if phone not in allaccs:
