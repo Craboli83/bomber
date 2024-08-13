@@ -25,7 +25,7 @@ async def yesedit(event):
     if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
         if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
             flag = get_flag(phone)
-            fname = str(flag) + fake.first_name()
+            fname = str(flag) + " " + fake.first_name()
         else:
             fname = fake.first_name()
         try:
@@ -35,7 +35,7 @@ async def yesedit(event):
     if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
         if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
             flag = get_flag(phone)
-            lname = fake.last_name() + str(flag)
+            lname = fake.last_name() + " " + str(flag)
         else:
             lname = fake.last_name()
         try:
@@ -49,7 +49,7 @@ async def yesedit(event):
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
-            pics = search_photo(random.choice(["man", "woman", "boy", "girl"]))
+            pics = search_photo(random.choice(["men", "women", "boy", "girl"]))
             pic = random.choice(pics)
             img_data = requests.get(pic).content
             with open("photo.jpg", "wb") as handler:
@@ -64,13 +64,13 @@ async def yesedit(event):
     await event.reply(f"""
 **#Manage_Menu**
 
-**📱 Phone:** ( `{phone}` )
+**📱 Phone:** ( {flag} `{phone}` {flag} )
 
 __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( `{phone}` )\n**🆔 UserID:** ( `{event.sender_id}` )")
+    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )\n**🆔 UserID:** ( `{event.sender_id}` )")
     
 @Callback(data="noedit\:(.*)")
 async def noedit(event):
@@ -80,10 +80,10 @@ async def noedit(event):
     await event.reply(f"""
 **#Manage_Menu**
 
-**📱 Phone:** ( `{phone}` )
+**📱 Phone:** ( {flag} `{phone}` {flag} )
 
 __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( `{phone}` )\n**🆔 UserID:** ( `{event.sender_id}` )")
+    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )\n**🆔 UserID:** ( `{event.sender_id}` )")
