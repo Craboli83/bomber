@@ -34,3 +34,4 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
+    await event.edit(buttons=main_menu(event))
