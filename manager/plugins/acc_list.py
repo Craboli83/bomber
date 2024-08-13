@@ -1,8 +1,10 @@
 from manager import bot
-from manager.events import Cmd
+from telethon import Button
+from manager.events import Cmd, Callback
 from manager.database import DB
 from manager.functions import TClient, get_flag
 import re
+import os
 
 @Cmd(pattern="Accounts List 📋")
 async def myaccs(event):
@@ -33,3 +35,17 @@ async def myaccs(event):
         open(f"{event.sender_id}.txt", "w").write(str(text))
         text = f"**📋 Your Accounts List:**\n\n**💡 Count:** ( `{len(accs)}` )"
         await event.reply(text, file=f"{event.sender_id}.txt")
+
+@Callback(data="getaccs\:(.*)")
+async def yesedit(event):
+    userid = int(event.pattern_match.group(1).decode('utf-8'))
+    accs = DB.get_key("USER_ACCS")[userid]
+    text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
+    for acc in accs:
+        session = accs[acc]
+        text += f"{acc} - {status}\n"
+    fname = str(userid) + ".txt"
+    open(fname, "w").write(text)
+    text = text = f"**📋 Your Accounts List:**\n**💡 Count:** ( `{len(accs)}` )"
+    await event.reply(text, file=fname)
+    os.remove(fname)
