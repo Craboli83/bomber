@@ -21,7 +21,8 @@ async def myaccs(event):
             status = "✅" if client else "❌"
             text += f"**{count} - {flag}** `{acc}` ( `{status}` )\n"
             count += 1
-        await event.reply(text)
+        buttons = [[Button.inline("❌ No ❌", data=f"getaccs:{event.sender_id}")]]
+        await event.reply(text, buttons=buttons)
     else:
         text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
         count = 1
@@ -34,18 +35,19 @@ async def myaccs(event):
             count += 1
         open(f"{event.sender_id}.txt", "w").write(str(text))
         text = f"**📋 Your Accounts List:**\n\n**💡 Count:** ( `{len(accs)}` )"
-        await event.reply(text, file=f"{event.sender_id}.txt")
+        buttons = [[Button.inline("❌ No ❌", data=f"getaccs:{event.sender_id}")]]
+        await event.reply(text, file=f"{event.sender_id}.txt", buttons=buttons)
 
 @Callback(data="getaccs\:(.*)")
 async def yesedit(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     accs = DB.get_key("USER_ACCS")[userid]
-    text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
+    text = f"💡 Count: ( {len(accs)} )\n\n"
     for acc in accs:
         session = accs[acc]
         text += f"{acc} - {status}\n"
     fname = str(userid) + ".txt"
     open(fname, "w").write(text)
-    text = text = f"**📋 Your Accounts List:**\n**💡 Count:** ( `{len(accs)}` )"
+    text = text = f"**📋 Your Accounts Sessions List!**\n\n**💡 Count:** ( `{len(accs)}` )"
     await event.reply(text, file=fname)
     os.remove(fname)
