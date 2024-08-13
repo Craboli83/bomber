@@ -6,7 +6,7 @@ from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRe
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from faker import Faker
 from . import main_menu, manage_menu
-from manager.functions import search_photo
+from manager.functions import search_photo, get_flag
 import re
 import requests
 import random
@@ -22,26 +22,27 @@ async def yesedit(event):
     await client.connect()
     fake = Faker()
     if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
+        if DB.get_key("CHANGE_ACCS_FLAGE")[event.sender_id] == "yes":
+            fname = str(flag) + fake.first_name()
+        else:
+            fname = fake.first_name()
         try:
-            await client(UpdateProfileRequest(first_name=fake.first_name()))
+            await client(UpdateProfileRequest(first_name=fname))
         except:
             pass
     if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
+        if DB.get_key("CHANGE_ACCS_FLAGE")[event.sender_id] == "yes":
+            lname = fake.last_name() + str(flag)
+        else:
+            lname = fake.last_name()
         try:
-            await client(UpdateProfileRequest(last_name=fake.last_name()))
+            await client(UpdateProfileRequest(last_name=lname))
         except:
             pass
     if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(about=fake.text().split(".")[0]))
         except:
-            pass
-    if DB.get_key("CHANGE_ACCS_USERNAME")[event.sender_id] == "yes":
-        try:
-            username = fake.first_name() + "_" + fake.last_name() + str(random.randint(100, 999))
-            await client(UpdateUsernameRequest(username))
-        except Exception as e:
-            print(e)
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
@@ -53,8 +54,7 @@ async def yesedit(event):
             file = await client.upload_file("photo.jpg")
             await client(UploadProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
-        except Exception as e:
-            print(e)
+        except:
             pass
     await event.edit(f"**✅ Account Successfuly Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__", buttons=main_menu(event))
     menu = manage_menu(phone)
@@ -69,7 +69,6 @@ __❗ Dont Delete This Menu!__
 """, buttons=menu)
     await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**📱 Account Number:** ( `{phone}` )\n**🆔 UserID:** ( `{event.sender_id}` )")
     
-
 @bot.on(events.CallbackQuery(data=re.compile("noedit\:(.*)")))
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
