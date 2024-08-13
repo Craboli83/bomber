@@ -103,3 +103,18 @@ async def add_account(event):
             return await edit.edit(error)
     except Exception as error:
         return await edit.edit(error)
+
+@Cmd(pattern="Add Session 🔗")
+async def add_session(event):
+    async with bot.conversation(event.chat_id) as conv:
+        send = await event.reply("**🧬 Ok, Send Your Telethon Session String:**", buttons=back_menu)
+        response = await conv.get_response(send.id)
+        session = response.text
+    edit = await event.reply("`♻️ Please Wait . . .`")
+    client = await TClient(session)
+    if not client:
+        return await edit.edit("**❌ Your Telethon Session String Is Invalid!**", buttons=main_menu(event)) 
+    myinfo = await client.get_me()
+    phone = myinfo.phone
+    flag = get_flag(phone)
+    await edit.edit(f"{str(myinfo)}\n\n{phone}\n\n{flag}", buttons=main_menu(event))
