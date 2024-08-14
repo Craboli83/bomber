@@ -86,7 +86,7 @@ def Cmd(
                     buttons = []
                     for nsub in notsubs:
                         buttons.append([Button.url(notsubs[nsub], nsub)])
-                    buttons.append([Button.inline("• Joined ✅", data=f"checkjoin:{event.sender_id}")
+                    buttons.append([Button.inline("• Joined ✅", data=f"checkjoin:{event.sender_id}")])
                     return await event.reply(text, buttons=buttons)
 
             if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
