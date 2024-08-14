@@ -104,6 +104,8 @@ async def add_session(event):
         send = await event.reply("**🧬 Ok, Send Your Telethon Session String:**", buttons=back_menu)
         response = await conv.get_response(send.id)
         session = response.text
+    if phone in DB.get_key("CMD_LIST"):
+        return
     edit = await event.reply("`♻️ Please Wait . . .`")
     client = await TClient(session)
     if not client:
@@ -111,7 +113,7 @@ async def add_session(event):
     myinfo = await client.get_me()
     phone = "+" + str(myinfo.phone)
     if not phone:
-        return await edit.edit("**❌ Your Telethon Session String Is Not For A User!**", buttons=main_menu(event)) 
+        return await edit.edit("**❌ Your Telethon Session String Is Not For A Account!**", buttons=main_menu(event)) 
     flag = get_flag(phone)
     allaccs = DB.get_key("USER_ACCS")[event.sender_id]
     if phone not in allaccs:
