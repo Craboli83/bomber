@@ -69,7 +69,8 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await event.edit(buttons=main_menu(event))
+    send = await event.respond(".", buttons=main_menu(event))
+    await send.delete()
 
 @Callback(data="noedit\:(.*)")
 async def noedit(event):
@@ -86,4 +87,5 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await event.edit(buttons=main_menu(event))
+    send = await event.respond(".", buttons=main_menu(event))
+    await send.delete()
