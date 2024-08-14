@@ -34,6 +34,7 @@ def panel_menu():
         [Button.inline(f"{status} Bot Status {status}", data="onoff")],
         [Button.inline("📤 Send To All 📤", data="sendtoall"), Button.inline("📤 Send To User 📤", data="sendtouser")],
         [Button.inline("📝 Get Users 📝", data="getusers")],
+        [Button.inline("Edit Channels", data="editchs")],
     ]
     return menu
 
