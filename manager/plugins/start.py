@@ -1,7 +1,7 @@
-from manager import bot, CHANNEL
-from telethon import events, functions
+from manager import bot
+from manager.events import check_subs
 from . import main_menu, manage_menu
-from manager.events import Cmd
+from manager.events import Cmd, Callback
 from . import main_menu
 import re
 
@@ -14,16 +14,13 @@ async def start(event):
 async def back(event):
     await event.reply("**♻️ Im Backed To Main Menu!**", buttons=main_menu(event))
 
-@bot.on(events.CallbackQuery(data=re.compile("checkjoin\:(.*)")))
+@Callback(data="checkjoin\:(.*)")
 async def checkjoin(event):
-    id = int(event.pattern_match.group(1).decode('utf-8'))
-    try:
-        await bot(functions.channels.GetParticipantRequest(
-            channel=CHANNEL,
-            participant=id
-        ))
-        info = await bot.get_entity(event.sender_id)
+    userid = int(event.pattern_match.group(1).decode('utf-8'))
+    notsubs = check_subs(id)
+    if not notsubs:
+        info = await bot.get_entity(userid)
         await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu(event))
         await event.delete()
-    except:
-        await event.answer("❌ You Are Not Joined To Channel!", alert=True)
+    else:
+        await event.answer("❌ You Are Not Joined To All Channels!", alert=True)
