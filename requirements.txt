@@ -1,6 +1,5 @@
 telethon
 pyrogram
-redis
 Faker
 pycountry
 requests
