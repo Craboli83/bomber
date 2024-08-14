@@ -53,7 +53,7 @@ async def sendtouser(event):
     await response.reply(f"**✅ Your Message Successfuly Sended To User:** ( `{userid}` )", buttons=main_menu(event))
 
 @Callback(data="getusers")
-async def sendtoall(event):
+async def getuserslist(event):
     users = DB.get_key("BOT_USERS")
     acccount = DB.get_key("USER_ACCS_COUNT")
     if len(users) < 100:
@@ -71,3 +71,31 @@ async def sendtoall(event):
             count += 1
         open("users.txt", "w").write(text)
         await event.reply("**📝 Bot Users!**", file="users.txt") 
+
+@Callback(data="addvip")
+async def addvip(event):
+    async with bot.conversation(event.chat_id) as conv:
+        send = await event.reply("**💡 Please Send UserID To Add In Vip Users:**", buttons=back_menu)
+        response = await conv.get_response(send.id, timeout=60)
+    userid = response.text
+    if response.text in DB.get_key("CMD_LIST"):
+        return
+    vipusers = DB.get_key("VIP_USERS")
+    if userid not in vipusers:
+        vipusers.append(userid)
+    info = await bot.get_entity(userid)
+    await response.reply(f"**✅ User** ( `{info.first_name}` - `{info.id}` ) **Was Added To Vip Users!**", buttons=main_menu(event))
+
+@Callback(data="delvip")
+async def delvip(event):
+    async with bot.conversation(event.chat_id) as conv:
+        send = await event.reply("**💡 Please Send UserID To Delete From Vip Users:**", buttons=back_menu)
+        response = await conv.get_response(send.id, timeout=60)
+    userid = response.text
+    if response.text in DB.get_key("CMD_LIST"):
+        return
+    vipusers = DB.get_key("VIP_USERS")
+    if userid in vipusers:
+        vipusers.remove(userid)
+    info = await bot.get_entity(userid)
+    await response.reply(f"**❌ User** ( `{info.first_name}` - `{info.id}` ) **Was Deleted From Vip Users!**", buttons=main_menu(event))
