@@ -32,7 +32,7 @@ def panel_menu():
     sbtime = DB.get_key("SPAM_BAN_TIME")
     menu = [
         [Button.inline(f"{status} Bot Status {status}", data="onoff")],
-        [Button.inline("📤 Send To All 📤", data="sendtoall")],
+        [Button.inline("📤 Send To All 📤", data="sendtoall"), Button.inline("📤 Send To User 📤", data="sendtouser")],
         [Button.inline("📝 Get Users 📝", data="getusers")],
     ]
     return menu
