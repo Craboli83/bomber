@@ -74,7 +74,7 @@ class RedisDB:
 
 class LocalDB:
     def __init__(self):
-        self.db = Database("FidoDB")
+        self.db = Database("../FidoDB.json")
         self.get = self.db.get
         self.set = self.db.set
         self.delete = self.db.delete
