@@ -104,8 +104,8 @@ async def addvip(event):
     vipusers = DB.get_key("VIP_USERS")
     if userid not in vipusers:
         vipusers.append(userid)
-    info = await bot.get_entity(userid)
-    await response.reply(f"**✅ User** ( `{info.first_name}` - `{info.id}` ) **Was Added To Vip Users!**", buttons=main_menu(event))
+    DB.set_key("VIP_USERS", vipusers)
+    await response.reply(f"**✅ User** ( `{info.id}` ) **Was Added To Vip Users!**", buttons=main_menu(event))
 
 @Callback(data="delvip")
 async def delvip(event):
@@ -118,5 +118,5 @@ async def delvip(event):
     vipusers = DB.get_key("VIP_USERS")
     if userid in vipusers:
         vipusers.remove(userid)
-    info = await bot.get_entity(userid)
-    await response.reply(f"**❌ User** ( `{info.first_name}` - `{info.id}` ) **Was Deleted From Vip Users!**", buttons=main_menu(event))
+    DB.set_key("VIP_USERS", vipusers)
+    await response.reply(f"**❌ User** ( `{info.id}` ) **Was Deleted From Vip Users!**", buttons=main_menu(event))
