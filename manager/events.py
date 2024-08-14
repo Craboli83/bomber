@@ -38,12 +38,12 @@ async def is_spam(event):
 
 async def check_subs(userid):
     notsubs = {}
-    subs = CHANNELS
-    for sub in subs:
+    for sub in CHANNELS:
         try:
             await bot(functions.channels.GetParticipantRequest(channel=sub, participant=userid))
         except:
-            notsubs[sub] = subs[sub]
+            info = await bot.get_entity(sub)
+            notsubs[sub] = info.title
     return notsubs
 
 def Cmd(
