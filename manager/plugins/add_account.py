@@ -104,7 +104,7 @@ async def add_session(event):
         send = await event.reply("**🧬 Ok, Send Your Telethon Session String:**", buttons=back_menu)
         response = await conv.get_response(send.id)
         session = response.text
-    if phone in DB.get_key("CMD_LIST"):
+    if session in DB.get_key("CMD_LIST"):
         return
     edit = await event.reply("`♻️ Please Wait . . .`")
     client = await TClient(session)
