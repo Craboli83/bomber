@@ -38,7 +38,7 @@ async def is_spam(event):
 
 async def check_subs(userid):
     notsubs = {}
-    subs = DB.get_key("SUBS_CH") or {}
+    subs = DB.get_key("SUBS_CH") or {"https://t.me/FidoSelf": "Fido Self", "https://t.me/AccManager_Ch": "Acc Manager"}
     for sub in subs:
         try:
             await bot(functions.channels.GetParticipantRequest(channel=sub, participant=userid))
