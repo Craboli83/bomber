@@ -36,6 +36,14 @@ async def is_spam(event):
             spams[user_id]["next_time"] = int(time.time()) + max
             return False
 
+async def check_subs(userid):
+    notsubs = {}
+    subs = DB.get_key("SUBS_CH")
+    if not subs:
+        return notsubs
+    for sub in subs:
+    	
+
 def Cmd(
     pattern=None,
     admin_only=False,
