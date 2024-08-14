@@ -1,4 +1,4 @@
-from . import bot, LOG_GROUP, CHANNEL
+from . import bot, LOG_GROUP, CHANNELS
 from telethon import events, functions, Button
 from manager.database import DB
 from traceback import format_exc
@@ -38,7 +38,7 @@ async def is_spam(event):
 
 async def check_subs(userid):
     notsubs = {}
-    subs = DB.get_key("SUBS_CH") or {"https://t.me/FidoSelf": "Fido Self", "https://t.me/AccManager_Ch": "Acc Manager"}
+    subs = CHANNELS
     for sub in subs:
         try:
             await bot(functions.channels.GetParticipantRequest(channel=sub, participant=userid))
