@@ -17,7 +17,7 @@ async def back(event):
 @Callback(data="checkjoin\:(.*)")
 async def checkjoin(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
-    notsubs = check_subs(id)
+    notsubs = check_subs(userid)
     if not notsubs:
         info = await bot.get_entity(userid)
         await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu(event))
