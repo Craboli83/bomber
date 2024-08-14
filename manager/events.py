@@ -38,11 +38,13 @@ async def is_spam(event):
 
 async def check_subs(userid):
     notsubs = {}
-    subs = DB.get_key("SUBS_CH")
-    if not subs:
-        return notsubs
+    subs = DB.get_key("SUBS_CH") or {}
     for sub in subs:
-    	
+        try:
+            await bot(functions.channels.GetParticipantRequest(channel=sub, participant=userid))
+        except:
+            notsubs[sub] = subs[sub]
+    return notsubs
 
 def Cmd(
     pattern=None,
@@ -76,16 +78,17 @@ def Cmd(
             if not event.sender_id == bot.admin.id and (await is_spam(event)):
                 return
 
-            try:
-                await bot(functions.channels.GetParticipantRequest(
-                    channel=CHANNEL,
-                    participant=event.sender_id
-                ))
-            except:
-                info = await bot.get_entity(event.sender_id)
-                text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __♻️ Channel:__ **@{CHANNEL}**"
-                buttons = [[Button.url("❗ Join Channel ❗", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
-                return await event.reply(text, buttons=buttons)
+            if not event.sender_id == bot.admin.id:
+                notsubs = await check_subs(event.sender_id)
+                if notsubs:
+                    info = await bot.get_entity(event.sender_id)
+                    text = f"**👋 Hi {info.first_name}!**\n\n**🔶 Sorry, For Use From Bot Please Join To My Channels!**"
+                    buttons = []
+                    for nsub in notsubs:
+                        buttons.append([Button.url(notsubs[nsub], nsub)])
+                    buttons.append([Button.inline("• Joined ✅", data=f"checkjoin:{event.sender_id}")])
+                    await event.edit(buttons=main_menu(event))
+                    return await event.reply(text, buttons=buttons)
 
             if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
                 return await event.reply("**❌ Sorry, The Bot Has Been DeActived!**\n\n__❗ Please Try Again Later!__")
