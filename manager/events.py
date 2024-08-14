@@ -65,6 +65,14 @@ def Cmd(
 
             if admin_only and event.sender_id != bot.admin.id:
                 return
+            
+            if not DB.get_key("VIP_USERS"):
+                DB.set_key("VIP_USERS", [])
+
+            if not event.sender_id == bot.admin.id:
+                vipusers = DB.get_key("VIP_USERS")
+                if event.sender_id not in vipusers:
+                    return await event.reply(f"**⛔️ This Bot Is Only For Vip Users!**\n\n**💠 Contact Creator For Vip Added!**\n\n**💡 Maker: @TheAboli**", buttons=None)
 
             if not DB.get_key("BLOCK_USERS"):
                 DB.set_key("BLOCK_USERS", [])
