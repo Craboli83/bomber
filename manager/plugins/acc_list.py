@@ -9,8 +9,9 @@ import os
 @Cmd(pattern="Accounts List 📋")
 async def myaccs(event):
     accs = DB.get_key("USER_ACCS")[event.sender_id]
+    edit = await event.reply("`♻️ Please Wait . . .`")
     if len(accs) == 0:
-        return await event.reply("**❗ You Account List Is Empty, Please Added Account To Bot!**")
+        return await edit.edit("**❗ You Account List Is Empty, Please Added Account To Bot!**")
     elif len(accs) < 100:
         text = f"**📋 Your Accounts List:**\n**💡 Count:** ( `{len(accs)}` )\n\n"
         count = 1
@@ -22,7 +23,7 @@ async def myaccs(event):
             text += f"**{count} - {flag}** `{acc}` ( `{status}` )\n"
             count += 1
         buttons = [[Button.inline("• Get Sessions •", data=f"getaccs:{event.sender_id}")]]
-        await event.reply(text, buttons=buttons)
+        await edit.reply(text, buttons=buttons)
     else:
         text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
         count = 1
@@ -36,8 +37,9 @@ async def myaccs(event):
         open(f"{event.sender_id}.txt", "w").write(str(text))
         text = f"**📋 Your Accounts List:**\n\n**💡 Count:** ( `{len(accs)}` )"
         buttons = [[Button.inline("• Get Sessions •", data=f"getaccs:{event.sender_id}")]]
-        await event.reply(text, file=f"{event.sender_id}.txt", buttons=buttons)
-
+        await edit.reply(text, file=f"{event.sender_id}.txt", buttons=buttons)
+        await edit.delete()
+        
 @Callback(data="getaccs\:(.*)")
 async def yesedit(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
@@ -45,7 +47,7 @@ async def yesedit(event):
     text = f"💡 Count: ( {len(accs)} )\n\n"
     for acc in accs:
         session = accs[acc]
-        text += f"{acc} - {session}\n"
+        text += f"{acc} - {session}\n\n"
     fname = str(userid) + ".txt"
     open(fname, "w").write(text)
     text = f"**📋 Your Accounts Sessions List!**\n\n**💡 Count:** ( `{len(accs)}` )"
