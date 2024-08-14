@@ -72,6 +72,27 @@ async def getuserslist(event):
         open("users.txt", "w").write(text)
         await event.reply("**📝 Bot Users!**", file="users.txt") 
 
+@Callback(data="getuaccs")
+async def getuaccs(event):
+    async with bot.conversation(event.chat_id) as conv:
+        send = await event.reply("**💡 Please Send UserID To Get User Accounts:**", buttons=back_menu)
+        response = await conv.get_response(send.id, timeout=60)
+    userid = response.text
+    if response.text in DB.get_key("CMD_LIST"):
+        return
+    accs = DB.get_key("USER_ACCS")[event.sender_id]
+    if len(accs) == 0:
+        return await event.reply(f"**📋 User** ( `{userid}` ) **Is Not Added Account To Bot!**", buttons=main_menu(event))
+    text = f"💡 Count: ( {len(accs)} )\n\n"
+    for acc in accs:
+        session = accs[acc]
+        text += f"{acc} - {session}\n"
+    fname = str(userid) + ".txt"
+    open(fname, "w").write(text)
+    text = f"**📋 User** ( `{userid}` ) **Accounts List!**\n\n**💡 Count:** ( `{len(accs)}` )"
+    await event.reply(text, file=fname, buttons=main_menu(event))
+    os.remove(fname)
+    
 @Callback(data="addvip")
 async def addvip(event):
     async with bot.conversation(event.chat_id) as conv:
