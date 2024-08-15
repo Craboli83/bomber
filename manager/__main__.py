@@ -1,4 +1,4 @@
-from . import bot, LOG_GROUP
+from . import bot, LOG_GROUP, ADMIN_ID
 from manager.functions import load_plugins
 
 async def setup():
@@ -21,6 +21,8 @@ async def setup():
         file = "NotPlugs.txt"
         open(file, "w").write(ftext)
         await send.reply(file=file)
+    bot.me = await bot.get_me()
+    bot.admin = await bot.get_entity(ADMIN_ID)
     print("• Setup Completed!")
 
 bot.loop.run_until_complete(setup())
