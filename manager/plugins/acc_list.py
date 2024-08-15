@@ -21,6 +21,7 @@ async def myaccs(event):
             count += 1
         buttons = [[Button.inline("• Check Accounts •", data=f"checkaccs:{event.sender_id}")], [(Button.inline("• Get Sessions •", data=f"getaccs:{event.sender_id}"))]]
         await edit.reply(text, buttons=buttons)
+        await edit.delete()
     else:
         text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
         count = 1
