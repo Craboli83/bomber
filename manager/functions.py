@@ -6,23 +6,31 @@ from phonenumbers.phonenumberutil import region_code_for_number
 from bs4 import BeautifulSoup
 from traceback import format_exc
 import os
+import pathlib
 import base64
 import time
 import requests 
 import importlib
 import glob
 import re
+import sys
 
 def load_plugins(folder):
     plugs = []
     notplugs = {}
     for file in glob.glob(folder + "*.py"):
+        plugin_name = os.path.basename(file)
         try:
-            filename = file.replace("/", ".").replace(".py" , "")
-            importlib.import_module(filename)
-            plugs.append(os.path.basename(file))
+            path = pathlib.Path(f"manager/plugins/{plugin_name}")
+            name = "manager.plugins.{}".format(plugin_name.replace(".py" , ""))
+            spec = importlib.util.spec_from_file_location(name, path)
+            load = importlib.util.module_from_spec(spec)
+            load.logger = logging.getLogger(plugin_name)
+            spec.loader.exec_module(load)
+            sys.modules[name] = load
+            plugs.append(plugin_name)
         except:
-            notplugs.update({os.path.basename(file): format_exc()})
+            notplugs.update({plugin_name: format_exc()})
     return plugs, notplugs
 
 async def TClient(session):
