@@ -1,9 +1,10 @@
+from manager import DB_NAME
 import json
 
 class Database:
-    def __init__(self, database_name):
+    def __init__(self):
+        self.dbname = DB_NAME
         self.cache = {}
-        self.dbname = database_name
         self.re_data()
 
     def get_data(self):
@@ -11,9 +12,9 @@ class Database:
             fdata = open(self.dbname, "r")
             data = fdata.read()
         else:
-            ndata = open(self.dbname, "w")
-            ndata.write(str({}))
             data = str({})
+            ndata = open(self.dbname, "w")
+            ndata.write(data)
         return data
 
     def re_data(self):
