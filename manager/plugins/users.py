@@ -3,7 +3,7 @@ from manager.events import Callback
 from manager.database import DB
 import re
 
-@Callback(data="block\:(.*)")
+@Callback(data="block:(.*)")
 async def block(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     blocks = DB.get_key("BLOCK_USERS")
@@ -15,7 +15,7 @@ async def block(event):
     else:
         await event.edit(f"**🚫 This User** ( `{userid}` ) **Already Blocked From Bot!**")
 
-@Callback(data="unblock\:(.*)")
+@Callback(data="unblock:(.*)")
 async def block(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     blocks = DB.get_key("BLOCK_USERS")
