@@ -20,11 +20,11 @@ class Database:
 
     def re_data(self):
         data = self.get_data()
-        self.cache = eval(self.get_data())
+        self._cache = eval(self.get_data()) if isinstance(data, str) else data
 
     def get(self, key):
         if key in self.cache:
-            return eval(self.cache.get(key))
+            return self.cache.get(key)
 
     def set(self, key=None, value=None, delete_key=None):
         data = self.cache
