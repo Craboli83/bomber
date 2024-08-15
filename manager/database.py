@@ -1,5 +1,6 @@
 from manager import DB_NAME
 import json
+import os
 
 class Database:
     def __init__(self):
