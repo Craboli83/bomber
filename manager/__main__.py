@@ -1,5 +1,21 @@
-from . import bot, LOG_GROUP, ADMIN_ID, CMDS
+from . import bot, LOG_GROUP, ADMIN_ID
 from manager.functions import load_plugins
+
+CMDS = [
+    "My Info 📝",
+    "Accounts List 📋",
+    "Support 🧒",
+    "Account Panel 🛠️",
+    "/start",
+    "🔙",
+    "Admin Panel 🔐",
+    "Guide 💡",
+    "Account Settings ⚙️",
+    "Add Account 📥",
+    "Add Session 🔗",
+    "Admin Panel 🔐",
+    "/panel",
+]
 
 async def setup():
     print("• Installing Plugins ...")
