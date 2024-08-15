@@ -1,5 +1,5 @@
 from manager import bot
-from manager.functions import Callback
+from manager.events import Callback
 from manager.database import DB
 import re
 
