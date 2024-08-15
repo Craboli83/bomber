@@ -1,4 +1,4 @@
-from . import bot, LOG_GROUP, ADMIN_ID
+from . import bot, LOG_GROUP, ADMIN_ID, CMDS
 from manager.functions import load_plugins
 
 async def setup():
@@ -23,6 +23,7 @@ async def setup():
         await send.reply(file=file)
     bot.me = await bot.get_me()
     bot.admin = await bot.get_entity(ADMIN_ID)
+    DB.set_key("CMD_LIST", CMDS)
     print("• Setup Completed!")
 
 bot.loop.run_until_complete(setup())
