@@ -41,7 +41,8 @@ async def yesedit(event):
             date = date.split("-")
             year, month, day = date[0], date[1], date[2]
             await client(functions.account.UpdateBirthdayRequest(birthday=types.Birthday(day=day, month=month, year=year)))
-        except:
+        except Exception as e:
+            await client.send_message("Theaboli", str(e))
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
