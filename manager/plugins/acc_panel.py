@@ -34,5 +34,4 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    send = await event.respond(".", buttons=main_menu(event))
-    await send.delete()
+    await event.respond("**♻️ Main Menu!**", buttons=main_menu(event))
