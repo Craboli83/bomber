@@ -14,21 +14,21 @@ async def acc_settings(event):
 async def change_set(event):
     type = str(event.pattern_match.group(1).decode('utf-8'))
     id = str(event.pattern_match.group(2).decode('utf-8'))
-    if type == "fname":
-        all = DB.get_key("CHANGE_ACCS_FNAME")
+    if type == "name":
+        all = DB.get_key("CHANGE_ACCS_NAME")
         last = "no" if all[event.sender_id] == "yes" else "yes"
         all[event.sender_id] = last
-        DB.set_key("CHANGE_ACCS_FNAME", all)
-    elif type == "lname":
-        all = DB.get_key("CHANGE_ACCS_LNAME")
-        last = "no" if all[event.sender_id] == "yes" else "yes"
-        all[event.sender_id] = last
-        DB.set_key("CHANGE_ACCS_LNAME", all)
+        DB.set_key("CHANGE_ACCS_NAME", all)
     elif type == "bio":
         all = DB.get_key("CHANGE_ACCS_BIO")
         last = "no" if all[event.sender_id] == "yes" else "yes"
         all[event.sender_id] = last
         DB.set_key("CHANGE_ACCS_BIO", all)
+    elif type == "birth":
+        all = DB.get_key("CHANGE_ACCS_BIRTH")
+        last = "no" if all[event.sender_id] == "yes" else "yes"
+        all[event.sender_id] = last
+        DB.set_key("CHANGE_ACCS_BIRTH", all)
     elif type == "flag":
         all = DB.get_key("CHANGE_ACCS_FLAG")
         last = "no" if all[event.sender_id] == "yes" else "yes"
