@@ -3,7 +3,7 @@ from manager.functions import load_plugins
 
 async def setup():
     print("• Installing Plugins ...")
-    plugs, notplugs = load_plugins("./manager/plugins/")
+    plugs, notplugs = load_plugins("manager/plugins")
     print(f"• Successfully Installed {len(plugs)} Plugin From Main Plugins!")
     print(f"• Not Installed {len(notplugs)} Plugin From Main Plugins!")
     send = await bot.send_message(LOG_GROUP, "**• Bot Has Been Start Now!**")
