@@ -12,7 +12,7 @@ import re
 import requests
 import random
 
-@Callback(data="yesedit\:(.*)")
+@Callback(data="yesedit:(.*)")
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
@@ -71,7 +71,7 @@ __❗ Dont Delete This Menu!__
 """, buttons=menu)
     await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
 
-@Callback(data="noedit\:(.*)")
+@Callback(data="noedit:(.*)")
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
