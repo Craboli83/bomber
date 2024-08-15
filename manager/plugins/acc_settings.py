@@ -10,7 +10,7 @@ import random
 async def acc_settings(event):
     await event.reply(f"**✅ Welcome To Setting Panel For Your Accounts:**\n\n__✏️ Edit Your Change Account Settings:__", buttons=setting_menu(event))
 
-@Callback(data="ch\_(.*):(.*)")
+@Callback(data="ch_(.*):(.*)")
 async def change_set(event):
     type = str(event.pattern_match.group(1).decode('utf-8'))
     id = str(event.pattern_match.group(2).decode('utf-8'))
