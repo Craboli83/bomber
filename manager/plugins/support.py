@@ -17,7 +17,7 @@ async def support(event):
     await send.reply(f"**#New_Message**\n\n**🆔 UserID:** ( `{event.sender_id}` )", buttons=buttons)
     await response.reply(f"**✅ Your Message Successfuly Sended To Support!**\n\n__❗ Please Wait For Reponse!__", buttons=main_menu(event))
 
-@Callback(data="response\:(.*)")
+@Callback(data="response:(.*)")
 async def ressupport(event):
     id = int(event.pattern_match.group(1).decode('utf-8'))
     async with bot.conversation(LOG_GROUP) as conv:
