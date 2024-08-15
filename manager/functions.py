@@ -1,13 +1,29 @@
-from bs4 import BeautifulSoup
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from manager.database import DB
 import pycountry, phonenumbers 
 from phonenumbers.phonenumberutil import region_code_for_number
+from bs4 import BeautifulSoup
+from traceback import format_exc
 import os
 import base64
 import time
 import requests 
+import importlib
+import glob
+import re
+
+def load_plugins(folder):
+    plugs = []
+    notplugs = {}
+    for file in glob.glob(folder):
+        try:
+            filename = file.replace("/", ".").replace(".py" , "")
+            importlib.import_module(filename)
+            plugs.append(os.path.basename(file))
+        except:
+            notplugs.update({os.path.basename(file): format_exc()})
+    return plugs, notplugs
 
 async def TClient(session):
     try:
