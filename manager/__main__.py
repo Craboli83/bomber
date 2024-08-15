@@ -1,31 +1,26 @@
-from . import bot, ADMIN_ID
-import pathlib
-import glob
-import importlib
-import logging
-import sys
-import os
+from . import bot, LOG_GROUP
+from manager.functions import load_plugins
 
 async def setup():
-    print("• Starting Setup Plugins . . .")
-    files = glob.glob(f"manager/plugins/*.py")
-    for name in files:
-        plugin_name = os.path.basename(name)
-        try:
-            path = pathlib.Path(f"manager/plugins/{plugin_name}")
-            name = "manager.plugins.{}".format(plugin_name.replace(".py" , ""))
-            spec = importlib.util.spec_from_file_location(name, path)
-            load = importlib.util.module_from_spec(spec)
-            load.logger = logging.getLogger(plugin_name)
-            spec.loader.exec_module(load)
-            sys.modules[name] = load
-            print(f"""• Bot Has Imported ( {plugin_name.replace(".py", "")} ) Plugin""")
-        except Exception as e:
-            print(f"""• Bot Can't Import ( {plugin_name.replace(".py", "")} ) Plugin - Error : < {e} >""")
-    print("• Setup Plugins Completed!")
-    bot.me = await bot.get_me()
-    bot.admin = await bot.get_entity(ADMIN_ID)
-    print("• Bot Has Been Start Now!")
+    print("• Installing Plugins ...")
+    plugs, notplugs = load_plugins("./manager/plugins/")
+    print(f"• Successfully Installed {len(plugs)} Plugin From Main Plugins!")
+    print(f"• Not Installed {len(notplugs)} Plugin From Main Plugins!")
+    send = await bot.send_message(LOG_GROUP, "**• Bot Has Been Start Now!**")
+    text = "**✅ Loaded Plugins :**\n\n"
+    for plug in plugs:
+        text += f"`{plug}`\n"
+        await send.reply(text)
+    if notplugs:
+        text = "**❌ Unloaded Plugins :**\n\n"
+        ftext = ""
+        for plug in notplugs:
+            text += f"`{plug}`\n"
+            ftext += f"{notplugs[plug]}\n\n"
+        await send.reply(text)
+        file = "NotPlugs.txt"
+        open(file, "w").write(ftext)
+        await send.reply(file=file)
 
 bot.loop.run_until_complete(setup())
 bot.run_until_disconnected()
