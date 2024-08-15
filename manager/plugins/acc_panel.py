@@ -34,4 +34,4 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await event.respond("**♻️ Main Menu!**", buttons=main_menu(event))
+    await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
