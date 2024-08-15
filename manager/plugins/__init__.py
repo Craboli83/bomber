@@ -46,7 +46,7 @@ def setting_menu(event):
     ch_birth = "✅" if DB.get_key("CHANGE_ACCS_BIRTH")[event.sender_id] == "yes" else "❌"
     ch_flag = "✅" if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes" else "❌"
     menu = [
-        [Button.inline(f"• Name {ch_fname}", data=f"ch_name:{event.sender_id}"), Button.inline(f"• Bio {ch_lname}", data=f"ch_bio:{event.sender_id}")],
+        [Button.inline(f"• Name {ch_name}", data=f"ch_name:{event.sender_id}"), Button.inline(f"• Bio {ch_bio}", data=f"ch_bio:{event.sender_id}")],
         [Button.inline(f"• Photo {ch_bio}", data=f"ch_photo:{event.sender_id}"), Button.inline(f"• Birthday {ch_birth}", data=f"ch_birth:{event.sender_id}")],
         [Button.inline(f"• Flag {ch_flag}", data=f"ch_flag:{event.sender_id}")],
     ]
