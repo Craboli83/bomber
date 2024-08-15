@@ -55,7 +55,7 @@ async def getcodes(event):
     count = 1
     codes = f"**📋 Telegram Codes For Number:** ( {flag} `{phone}` {flag} )\n\n"
     async for mes in client.iter_messages(777000):
-        if match:= re.search("(\d*)\.", mes.text):
+        if match:= re.search("(\\d*)\\.", mes.text):
             if match.group(1):
                 codes += f"**• {count} -**  `{match.group(1)}`\n"
                 count += 1
