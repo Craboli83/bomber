@@ -1,7 +1,7 @@
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 from manager.config import *
-import sys
+from traceback import format_exc
 
 try:
     bot = TelegramClient(
@@ -9,6 +9,6 @@ try:
         api_id=API_ID,
         api_hash=API_HASH,
     ).start()
-except Exception as e:
-    print(f"• Error: {e}")
-    sys.exit()
+except:
+    error = format_exc()
+    print(f"• Error: {error}")
