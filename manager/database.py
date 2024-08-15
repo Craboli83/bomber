@@ -12,17 +12,15 @@ class Database:
         if os.path.isfile(self.dbname):
             fdata = open(self.dbname, "r")
             data = fdata.read()
-            print("Lasttttttttttttt")
         else:
             data = str({})
             ndata = open(self.dbname, "w")
             ndata.write(data)
-            print("Newwwwwwwwwwwwwww")
         return data
 
     def re_data(self):
         data = self.get_data()
-        self._cache = eval(self.get_data()) if isinstance(data, str) else data
+        self.cache = eval(self.get_data()) if isinstance(data, str) else data
 
     def get(self, key):
         if key in self.cache:
