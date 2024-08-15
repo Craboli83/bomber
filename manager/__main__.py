@@ -1,5 +1,6 @@
 from . import bot, LOG_GROUP, ADMIN_ID
 from manager.functions import load_plugins
+from manager.database import DB
 
 CMDS = [
     "My Info 📝",
