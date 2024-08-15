@@ -13,14 +13,3 @@ async def start(event):
 @Cmd(pattern="🔙")
 async def back(event):
     await event.reply("**♻️ Im Backed To Main Menu!**", buttons=main_menu(event))
-
-@Callback(data="checkjoin\:(.*)")
-async def checkjoin(event):
-    userid = int(event.pattern_match.group(1).decode('utf-8'))
-    notsubs = check_subs(userid)
-    if not notsubs:
-        info = await bot.get_entity(userid)
-        await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu(event))
-        await event.delete()
-    else:
-        await event.answer("❌ You Are Not Joined To All Channels!", alert=True)
