@@ -90,11 +90,10 @@ def Cmd(
                 notsubs = await check_subs(event.sender_id)
                 if notsubs:
                     info = await bot.get_entity(event.sender_id)
-                    text = f"**👋 Hi {info.first_name}!**\n\n**🔶 Sorry, For Use From Bot Please Join To My Channels!**"
+                    text = f"**👋 Hi {info.first_name}!**\n\n**🔶 Sorry, For Use From Bot Please Join To My Channels!**\n\n**✅ After Joining Start Again Bot!**"
                     buttons = []
                     for nsub in notsubs:
                         buttons.append([Button.url(notsubs[nsub], nsub)])
-                    buttons.append([Button.inline("• Joined ✅", data=f"checkjoin:{event.sender_id}")])
                     return await event.reply(text, buttons=buttons)
 
             if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
