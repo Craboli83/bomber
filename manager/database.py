@@ -45,7 +45,7 @@ class Database:
 
 class LocalDB:
     def __init__(self):
-        self.db = Database("../FidoDB.json")
+        self.db = Database()
         self.get = self.db.get
         self.set = self.db.set
         self.delete = self.db.delete
