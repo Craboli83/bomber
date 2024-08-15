@@ -23,9 +23,9 @@ async def yesedit(event):
     profile = fake.simple_profile()
     if DB.get_key("CHANGE_ACCS_NAME")[event.sender_id] == "yes":
         if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
-            fname = str(flag) + " " + profile.name() + " " + str(flag)
+            fname = str(flag) + " " + profile["name"] + " " + str(flag)
         else:
-            fname = profile.name()
+            fname = profile["name"]
         try:
             await client(functions.account.UpdateProfileRequest(first_name=fname))
         except:
