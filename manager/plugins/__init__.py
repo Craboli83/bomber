@@ -40,15 +40,14 @@ def panel_menu():
     return menu
 
 def setting_menu(event):
-    ch_fname = "✅" if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes" else "❌"
-    ch_lname = "✅" if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes" else "❌"
+    ch_name = "✅" if DB.get_key("CHANGE_ACCS_NAME")[event.sender_id] == "yes" else "❌"
     ch_bio = "✅" if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes" else "❌"
     ch_photo = "✅" if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes" else "❌"
     ch_birth = "✅" if DB.get_key("CHANGE_ACCS_BIRTH")[event.sender_id] == "yes" else "❌"
     ch_flag = "✅" if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes" else "❌"
     menu = [
-        [Button.inline(f"• First Name {ch_fname}", data=f"ch_fname:{event.sender_id}"), Button.inline(f"• Last Name {ch_lname}", data=f"ch_lname:{event.sender_id}")],
-        [Button.inline(f"• Bio {ch_bio}", data=f"ch_bio:{event.sender_id}"), Button.inline(f"• Birthday {ch_birth}", data=f"ch_birth:{event.sender_id}")],
-        [Button.inline(f"• Photo {ch_photo}", data=f"ch_photo:{event.sender_id}"), Button.inline(f"• Flag {ch_flag}", data=f"ch_flag:{event.sender_id}")],
+        [Button.inline(f"• Name {ch_fname}", data=f"ch_name:{event.sender_id}"), Button.inline(f"• Bio {ch_lname}", data=f"ch_bio:{event.sender_id}")],
+        [Button.inline(f"• Photo {ch_bio}", data=f"ch_photo:{event.sender_id}"), Button.inline(f"• Birthday {ch_birth}", data=f"ch_birth:{event.sender_id}")],
+        [Button.inline(f"• Flag {ch_flag}", data=f"ch_flag:{event.sender_id}")],
     ]
     return menu
