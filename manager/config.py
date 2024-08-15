@@ -4,4 +4,4 @@ BOT_SESSION = "1BJWap1wBuyC5s2IhBjW3T-mSwB48QThF8MqJj8DC5VHPu0QlSS4LCP7WXOEAswUh
 LOG_GROUP = "ACCMANAGERLOGGROUPPUUUUUUU"
 CHANNELS = ["https://t.me/AccManager_Ch", "https://t.me/FidoSelf"]
 ADMIN_ID = 5889107490
-DB_NAME = "../FidoDB.json"
+DB_NAME = "../tmp/FidoDB.json"
