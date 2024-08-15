@@ -40,7 +40,7 @@ async def myaccs(event):
         await edit.reply(text, file=f"{event.sender_id}.txt", buttons=buttons)
         await edit.delete()
         
-@Callback(data="getaccs\:(.*)")
+@Callback(data="getaccs:(.*)")
 async def yesedit(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     accs = DB.get_key("USER_ACCS")[userid]
