@@ -27,7 +27,7 @@ async def yesedit(event):
         else:
             fname = profile["name"]
         try:
-            await client(functions.account.UpdateProfileRequest(first_name=fname))
+            await client(functions.account.UpdateProfileRequest(first_name=fname, last_name=""))
         except:
             pass
     if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
@@ -39,10 +39,9 @@ async def yesedit(event):
         try:
             date = str(profile["birthdate"])
             date = date.split("-")
-            year, month, day = date[0], date[1], date[2]
+            year, month, day = int(date[0]), int(date[1]), int(date[2])
             await client(functions.account.UpdateBirthdayRequest(birthday=types.Birthday(day=day, month=month, year=year)))
-        except Exception as e:
-            await client.send_message("Theaboli", str(e))
+        except:
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
