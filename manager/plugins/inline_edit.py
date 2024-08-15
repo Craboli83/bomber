@@ -1,13 +1,10 @@
 from manager import bot, LOG_GROUP
-from manager.events import Callback
-from telethon import Button
-from manager.functions import TClient
-from manager.database import DB
-from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
-from telethon.tl.functions.photos import UploadProfilePhotoRequest
-from faker import Faker
 from . import main_menu, manage_menu
-from manager.functions import search_photo, get_flag
+from manager.events import Callback
+from telethon import functions, types, Button
+from manager.functions import TClient, get_flag
+from manager.database import DB
+import faker
 import re
 import requests
 import random
@@ -22,28 +19,28 @@ async def yesedit(event):
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     await client.connect()
-    fake = Faker()
-    if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
+    fake = faker.Faker(faker.config.AVAILABLE_LOCALES)
+    profile = fake.simple_profile()
+    if DB.get_key("CHANGE_ACCS_NAME")[event.sender_id] == "yes":
         if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
-            fname = str(flag) + " " + fake.first_name()
+            fname = str(flag) + " " + profile.name() + " " + str(flag)
         else:
-            fname = fake.first_name()
+            fname = profile.name()
         try:
-            await client(UpdateProfileRequest(first_name=fname))
-        except:
-            pass
-    if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
-        if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
-            lname = fake.last_name() + " " + str(flag)
-        else:
-            lname = fake.last_name()
-        try:
-            await client(UpdateProfileRequest(last_name=lname))
+            await client(functions.account.UpdateProfileRequest(first_name=fname))
         except:
             pass
     if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
         try:
-            await client(UpdateProfileRequest(about=fake.text().split(".")[0]))
+            await client(functions.account.UpdateProfileRequest(about=fake.text().split(".")[0]))
+        except:
+            pass
+    if DB.get_key("CHANGE_ACCS_BIRTH")[event.sender_id] == "yes":
+        try:
+            date = str(profile["birthdate"])
+            date = date.split("-")
+            year, month, day = date[0], date[1], date[2]
+            await client(functions.account.UpdateBirthdayRequest(birthday=types.Birthday(day=day, month=month, year=year)))
         except:
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
@@ -54,7 +51,7 @@ async def yesedit(event):
             with open("photo.jpg", "wb") as handler:
                 handler.write(img_data) 
             file = await client.upload_file("photo.jpg")
-            await client(UploadProfilePhotoRequest(file=file))
+            await client(functions.photos.UploadProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
         except:
             pass
