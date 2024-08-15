@@ -21,6 +21,7 @@ async def setup():
         file = "NotPlugs.txt"
         open(file, "w").write(ftext)
         await send.reply(file=file)
+    print("• Setup Completed!")
 
 bot.loop.run_until_complete(setup())
 bot.run_until_disconnected()
