@@ -16,7 +16,7 @@ import re
 def load_plugins(folder):
     plugs = []
     notplugs = {}
-    for file in glob.glob(folder):
+    for file in glob.glob(folder + "*.py"):
         try:
             filename = file.replace("/", ".").replace(".py" , "")
             importlib.import_module(filename)
