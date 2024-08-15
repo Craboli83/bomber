@@ -10,7 +10,7 @@ async def setup():
     text = "**✅ Loaded Plugins :**\n\n"
     for plug in plugs:
         text += f"`{plug}`\n"
-        await send.reply(text)
+    await send.reply(text)
     if notplugs:
         text = "**❌ Unloaded Plugins :**\n\n"
         ftext = ""
