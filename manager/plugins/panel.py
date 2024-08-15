@@ -99,7 +99,7 @@ async def addvip(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**💡 Please Send UserID To Add In Vip Users:**", buttons=back_menu)
         response = await conv.get_response(send.id, timeout=60)
-    userid = response.text
+    userid = int(response.text)
     if response.text in DB.get_key("CMD_LIST"):
         return
     vipusers = DB.get_key("VIP_USERS") or []
@@ -107,13 +107,14 @@ async def addvip(event):
         vipusers.append(userid)
     DB.set_key("VIP_USERS", vipusers)
     await response.reply(f"**✅ User** ( `{userid}` ) **Was Added To Vip Users!**", buttons=main_menu(event))
+    await bot.send_message(userid, "**✅ You Are Added To Vip Users By Admin!**", buttons=main_menu(event))
 
 @Callback(data="delvip")
 async def delvip(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**💡 Please Send UserID To Delete From Vip Users:**", buttons=back_menu)
         response = await conv.get_response(send.id, timeout=60)
-    userid = response.text
+    userid = int(response.text)
     if response.text in DB.get_key("CMD_LIST"):
         return
     vipusers = DB.get_key("VIP_USERS") or []
@@ -121,3 +122,4 @@ async def delvip(event):
         vipusers.remove(userid)
     DB.set_key("VIP_USERS", vipusers)
     await response.reply(f"**❌ User** ( `{userid}` ) **Was Deleted From Vip Users!**", buttons=main_menu(event))
+    await bot.send_message(userid, "**❌ You Are Deleted From Vip Users By Admin!**", buttons=main_menu(event))
