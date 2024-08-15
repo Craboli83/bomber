@@ -24,7 +24,7 @@ class Database:
 
     def get(self, key):
         if key in self.cache:
-            return self.cache.get(key)
+            return eval(self.cache.get(key))
 
     def set(self, key=None, value=None, delete_key=None):
         data = self.cache
@@ -66,8 +66,8 @@ class LocalDB:
             data = self.get(str(key))
         if data and isinstance(data, str):
             try:
-                data = ast.literal_eval(data)
-            except BaseException:
+                data = eval(data)
+            except:
                 pass
         return data
 
