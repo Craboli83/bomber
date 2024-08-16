@@ -33,11 +33,11 @@ async def getemailcode(event):
     session = str(event.pattern_match.group(1).decode('utf-8'))
     inbox = Email(session).inbox()
     if not inbox:
-        return await event.answer("❌ Nothing Email Is Not Received!", alert=True)
+        return await event.answer("❌ Telegram Code Is Not Received!", alert=True)
     msg = inbox["topic"]
     if inbox["from"] == "noreply@telegram.org" and re.search("Your Code \\- (\\d*)", msg):
         code = re.search("Your Code \\- (\\d*)", msg).group(1)
-        text = f"**✅ Telegram Email Code Received!**\n\n**📬 Code:** ( `{code}` )"
-        await event.edit(text)
+        text = f"**✅ Telegram Code Received!**\n\n**📬 Code:** ( `{code}` )"
+        await event.reply(text)
     else:
-        await event.answer("❌ Telegram Email Code Is Not Received!", alert=True)
+        await event.answer("❌ Telegram Code Is Not Received!", alert=True)
