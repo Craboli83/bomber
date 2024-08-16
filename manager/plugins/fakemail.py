@@ -22,8 +22,7 @@ async def getemailcode(event):
     if not inbox:
         return await event.answer("❌ Nothing Email Is Not Received!", alert=True)
     msg = inbox["topic"]
-    if inbox["from"] == "noreply@telegram.org" and re.search("Your Code \\- (\\d*)", msg):
-        match = re.search("Your Code \\- (\\d*)", msg)
+    if match:=re.search("Your Code \\- (\\d*)", msg):
         code = match.group(1)
         text = f"**✅ Telegram Email Code Received!**\n\n**📬 Code:** ( `{code}` )"
         await event.reply(text)
