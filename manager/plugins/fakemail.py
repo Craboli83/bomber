@@ -5,10 +5,23 @@ from manager.database import DB
 from fake_email import Email
 import re
 
+async def getemail():
+    try:
+        mail = Email().Mail()
+    except:
+        return None
+    myemail = mail["mail"]
+    if myemail.split("@")[-1] not in ["nowni.com"]:
+        return mail
+    else:
+        return await getemail()
+    
 @Cmd(pattern="Fake Email 📨")
 async def fakeemail(event):
     edit = await event.reply("`♻️ Please Wait . . .`")
-    mail = Email().Mail()
+    mail = await getemail()
+    if not mail:
+        return await event.edit(f"**❌ Your Email Is Not Created, Try Again!**")
     myemail = mail["mail"]
     session = mail["session"]
     text = f"**#FakeEmail**\n\n**✅ Your Email Was Created!**\n\n**💡 Email:** ( `{myemail}` )"
@@ -22,9 +35,9 @@ async def getemailcode(event):
     if not inbox:
         return await event.answer("❌ Nothing Email Is Not Received!", alert=True)
     msg = inbox["topic"]
-    if match:=re.search("Your Code \\- (\\d*)", msg):
-        code = match.group(1)
+    if inbox["from"] == "noreply@telegram.org" and re.search("Your Code \\- (\\d*)", msg):
+        code = re.search("Your Code \\- (\\d*)", msg).group(1)
         text = f"**✅ Telegram Email Code Received!**\n\n**📬 Code:** ( `{code}` )"
-        await event.reply(text)
+        await event.edit(text)
     else:
         await event.answer("❌ Telegram Email Code Is Not Received!", alert=True)
