@@ -2,6 +2,7 @@ telethon
 pyrogram
 Faker
 pycountry
+fake-mail
 requests
 redis
 bs4
