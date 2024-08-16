@@ -11,7 +11,7 @@ async def getemail():
     except:
         return None
     myemail = mail["mail"]
-    if myemail.split("@")[-1] not in ["nowni.com"]:
+    if myemail.split("@")[-1] in ["nowni.com"]:
         return mail
     else:
         return await getemail()
