@@ -6,6 +6,7 @@ from manager.functions import TClient, get_flag
 from manager.database import DB
 import faker
 import re
+import os
 import requests
 import random
 
@@ -45,7 +46,7 @@ async def yesedit(event):
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
-            title = random.choice(["men", "women", "boy", "girl", "mens", "womens"])
+            title = random.choice(["men", "women", "boy", "girl", "mens", "womens", "men persian", "women persian"])
             query = await client.inline_query("Pic", title)
             number = random.randint(0, 30)
             message = await query[number].click("me")
@@ -54,8 +55,8 @@ async def yesedit(event):
             await client(functions.photos.UploadProfilePhotoRequest(file=file))
             os.remove(pic)
             await message.delete()
-        except Exception as e:
-            return await client.send_message("me", str(e))
+        except:
+            pass
     await event.edit(f"**✅ Account Successfuly Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__")
     menu = manage_menu(phone)
     await event.reply(f"""
