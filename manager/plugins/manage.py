@@ -1,4 +1,5 @@
 from manager import bot, LOG_GROUP
+from . import main_menu
 from manager.events import Callback
 from telethon import functions, Button
 from manager.functions import TClient
