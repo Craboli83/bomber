@@ -13,6 +13,7 @@ import random
 @Callback(data="yesedit:(.*)")
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
+    await event.edit("`♻️ Please Wait . . .`")
     flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = await TClient(session)
