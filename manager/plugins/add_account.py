@@ -42,11 +42,14 @@ async def add_account(event):
         if phone_code in DB.get_key("CMD_LIST"):
             return
     except (PhoneNumberInvalidError, TypeError):
-        return await edit.edit("**❌ Your Phone Number Is Invalid!**", buttons=main_menu(event))
+        await edit.edit("**❌ Your Phone Number Is Invalid!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except PhoneNumberFloodError:
-        return await edit.edit("**❓ Your Phone Number Is Flooded!**", buttons=main_menu(event))
+        await edit.edit("**❓ Your Phone Number Is Flooded!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except PhoneNumberBannedError:
-        return await edit.edit("**🚫 Your Phone Number Is Banned!**", buttons=main_menu(event))
+        await edit.edit("**🚫 Your Phone Number Is Banned!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     edit = await event.reply("`♻️ Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
@@ -65,9 +68,11 @@ async def add_account(event):
         buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
         await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
     except (PhoneCodeInvalidError, TypeError):
-        return await edit.edit("**❌ Your Code Is Invalid, Try Again!**", buttons=main_menu(event))
+        await edit.edit("**❌ Your Code Is Invalid, Try Again!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except PhoneCodeExpiredError:
-        return await edit.edit("**🚫 Your Code Is Expired, Try Again!**", buttons=main_menu(event))
+        await edit.edit("**🚫 Your Code Is Expired, Try Again!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except SessionPasswordNeededError:
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**🔐 Ok, Send Your Account 2Fa Password For Your Phone:** ( {flag} `{phone}` {flag} )")
@@ -92,9 +97,11 @@ async def add_account(event):
             buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
             await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
         except PasswordHashInvalidError:
-            return await edit.edit("**❌ Your Account Password Is Invalid, Try Again!**", buttons=main_menu(event))
+            await edit.edit("**❌ Your Account Password Is Invalid, Try Again!**")
+            return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
         except Exception as error:
-            return await edit.edit(error)
+            await edit.edit(error)
+            return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except Exception as error:
         return await edit.edit(error)
 
@@ -109,11 +116,13 @@ async def add_session(event):
     edit = await event.reply("`♻️ Please Wait . . .`")
     client = await TClient(session)
     if not client:
-        return await edit.edit("**❌ Your Telethon Session String Is Invalid!**", buttons=main_menu(event)) 
+        await edit.edit("**❌ Your Telethon Session String Is Invalid!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     myinfo = await client.get_me()
     phone = "+" + str(myinfo.phone)
     if not phone:
-        return await edit.edit("**❌ Your Telethon Session String Is Not For A Account!**", buttons=main_menu(event)) 
+        await edit.edit("**❌ Your Telethon Session String Is Not For A Account!**")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     flag = get_flag(phone)
     allaccs = DB.get_key("USER_ACCS")[event.sender_id]
     if phone not in allaccs:
