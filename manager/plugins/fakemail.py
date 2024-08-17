@@ -1,7 +1,6 @@
 from manager import bot
 from telethon import Button
 from manager.events import Cmd, Callback
-from manager.database import DB
 from fake_email import Email
 import re
 
