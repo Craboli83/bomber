@@ -45,16 +45,17 @@ async def yesedit(event):
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
-            pics = search_photo(random.choice(["men", "women", "boy", "girl"]))
-            pic = random.choice(pics)
-            img_data = requests.get(pic).content
-            with open("photo.jpg", "wb") as handler:
-                handler.write(img_data) 
-            file = await client.upload_file("photo.jpg")
+            title = random.choice(["men", "women", "boy", "girl", "mens", "womens"])
+            query = await client.inline_query("Pic", title)
+            number = random.randint(0, 30)
+            message = await query[number].click("me")
+            pic = await message.download_media()
+            file = await client.upload_file(pic)
             await client(functions.photos.UploadProfilePhotoRequest(file=file))
-            os.remove("photo.jpg")
-        except:
-            pass
+            os.remove(pic)
+            await message.delete()
+        except Exception as e:
+            return await client.send_message("me", str(e))
     await event.edit(f"**✅ Account Successfuly Edited And Manage Menu Send For You:**\n\n__❗ Dont Delete This Menu!__")
     menu = manage_menu(phone)
     await event.reply(f"""
