@@ -1,5 +1,4 @@
 from redis import Redis
-from manager import DB_NAME
 import json
 import os
 
@@ -75,7 +74,7 @@ class RedisDB:
 
 class Database:
     def __init__(self):
-        self.dbname = DB_NAME
+        self.dbname = "../tmp/FidoDB.json"
         self.cache = {}
         self.re_data()
 
