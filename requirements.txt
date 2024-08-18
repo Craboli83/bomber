@@ -4,6 +4,7 @@ gunicorn
 redis
 Faker
 pycountry
+phonenumbers
 requests
 redis
 bs4
