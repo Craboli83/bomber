@@ -49,10 +49,10 @@ async def TClient(session=None):
             api_hash="52cdad8b941c04c0c85d28ed6b765825",
             device_model="POCO POCO X5 Pro 5G",
             system_version="1.0.5.0.UMSMIXM",
-            app_version="Telgram Android 11.0.0",
+            app_version="11.0.0",
         )
-    except:
-        return False
+    except Exception as error:
+        return error
     await client.connect()
     get = await client.get_me()
     if not get:
