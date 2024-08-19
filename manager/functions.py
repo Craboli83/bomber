@@ -26,20 +26,6 @@ def load_plugins(folder):
             notplugs.update({os.path.basename(file): format_exc()})
     return plugs, notplugs
 
-def mobile():
-    MOBILES = [
-        "POCO X5 PRO 5G",
-        "POCO X6 PRO 5G",
-        "REDMI K70 ULTRA 5G",
-        "XIAOMI 15 ULTRA 5G"
-        "IPHONE 15 PRO MAX",
-        "IPHONE 14 PRO MAX",
-        "SAMSUNG GALAXY S24 ULTRA 5G",
-        "SAMSUNG GALAXY S23 ULTRA 5G",
-        "SAMSUNG GALAXY S22 ULTRA 5G",
-    ]
-    return random.choice(MOBILES)
-
 async def TClient(session=None):
     stringses = StringSession(session) if session else StringSession()
     try:
