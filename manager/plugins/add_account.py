@@ -32,7 +32,6 @@ async def add_account(event):
         return
     edit = await event.reply("`♻️ Please Wait . . .`")
     client = await TClient()
-    await event.reply(str(client))
     try:
         scode = await client.send_code_request(phone, force_sms=False)
         async with bot.conversation(event.chat_id) as conv:
