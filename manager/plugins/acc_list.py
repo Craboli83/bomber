@@ -91,8 +91,8 @@ async def removedels(event):
         if not client:
             flag = get_flag(acc)
             allaccs[userid].pop(acc, None)
-            text += f"**{count} - {flag}** `{acc}`\n"
             count += 1
+            text += f"**{count} - {flag}** `{acc}`\n"
     if count >= 1:
         accscount = DB.get_key("USER_ACCS_COUNT")
         accscount[userid] -= count
