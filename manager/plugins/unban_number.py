@@ -1,5 +1,6 @@
 from manager import bot
 from manager.events import Cmd
+from manager.database import DB
 from . import back_menu
 from manager.functions import get_flag
 import os
