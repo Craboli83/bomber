@@ -31,7 +31,6 @@ def manage_menu(phone):
 
 def panel_menu():
     status = "✅" if DB.get_key("BOT_STATUS") == "on" else "❌"
-    sbtime = DB.get_key("SPAM_BAN_TIME")
     menu = [
         [Button.inline(f"{status} Bot Status {status}", data="onoff")],
         [Button.inline("📤 Send To All 📤", data="sendtoall"), Button.inline("📤 Send To User 📤", data="sendtouser")],
