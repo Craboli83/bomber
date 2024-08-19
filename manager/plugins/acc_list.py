@@ -20,8 +20,7 @@ async def myaccs(event):
             flag = get_flag(acc)
             text += f"**{count} - {flag}** `{acc}`\n"
             count += 1
-        buttons = [[Button.inline("• Check Accounts •", data=f"checkaccs:{event.sender_id}")], [(Button.inline("• Get Sessions •", data=f"getaccs:{event.sender_id}"))]]
-        await edit.reply(text, buttons=buttons)
+        await edit.reply(text, buttons=list_menu(event))
         await edit.delete()
     else:
         text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
