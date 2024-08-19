@@ -51,11 +51,10 @@ async def TClient(session=None):
             system_version="1.0.5.0.UMSMIXM",
             app_version="11.0.0",
         )
-    except Exception as error:
-        return error
+    except:
+        return False
     await client.connect()
-    get = await client.get_me()
-    if not get:
+    if session and not (await client.get_me()):
         return False
     return client
 
