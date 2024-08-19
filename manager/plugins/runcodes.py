@@ -1,5 +1,7 @@
-from manager import bot
-from telethon import events
+from manager import *
+from telethon import events, functions, types, Button
+from manager.database import DB
+from manager.functions import *
 import traceback
 import requests
 import asyncio
