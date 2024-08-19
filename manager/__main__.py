@@ -1,4 +1,4 @@
-from . import bot, LOG_GROUP, ADMIN_ID
+from . import bot, LOG_GROUP, ADMINS_ID
 from manager.functions import load_plugins
 from manager.database import DB
 
