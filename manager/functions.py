@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from traceback import format_exc
 import os
 import base64
+import random
 import time
 import requests 
 import importlib
@@ -25,9 +26,31 @@ def load_plugins(folder):
             notplugs.update({os.path.basename(file): format_exc()})
     return plugs, notplugs
 
-async def TClient(session):
+def mobile():
+    MOBILES = [
+        "POCO X5 PRO 5G",
+        "POCO X6 PRO 5G",
+        "REDMI K70 ULTRA 5G",
+        "XIAOMI 15 ULTRA 5G"
+        "IPHONE 15 PRO MAX",
+        "IPHONE 14 PRO MAX",
+        "SAMSUNG GALAXY S24 ULTRA 5G",
+        "SAMSUNG GALAXY S23 ULTRA 5G",
+        "SAMSUNG GALAXY S22 ULTRA 5G",
+    ]
+    return random.choice(MOBILES)
+
+async def TClient(session=None):
+    stringses = StringSession(session) if session else StringSession()
     try:
-        client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="AccManager 🔐")
+        client = TelegramClient(
+            session=stringses,
+            api_id=13367220,
+            api_hash="52cdad8b941c04c0c85d28ed6b765825",
+            device_model="POCO POCO X5 Pro 5G",
+            system_version="1.0.5.0.UMSMIXM",
+            app_version="Telgram Android 11.0.0",
+        )
     except:
         return False
     await client.connect()
