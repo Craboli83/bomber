@@ -39,7 +39,7 @@ async def setup():
         open(file, "w").write(ftext)
         await send.reply(file=file)
     bot.me = await bot.get_me()
-    bot.admin = await bot.get_entity(ADMIN_ID)
+    bot.admins = ADMINS_ID
     DB.set_key("CMD_LIST", CMDS)
     print("• Setup Completed!")
 
