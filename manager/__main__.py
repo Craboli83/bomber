@@ -44,4 +44,4 @@ async def setup():
     print("• Setup Completed!")
 
 bot.loop.run_until_complete(setup())
-bot.client.run_until_disconnected()
+bot.run_until_disconnected()
