@@ -1,7 +1,7 @@
 from manager import bot
 from manager.events import Cmd
 from manager.database import DB
-from . import back_menu
+from . import main_menu, back_menu
 from manager.functions import get_flag
 import os
 import random
@@ -35,3 +35,4 @@ async def unbannumber(event):
     text = f"**💯 UnBan Text Email File For:** ( {flag} `{phone}` {flag} )\n\n**💠 Open This On Your Browser And Click To Send Email!**"
     await event.reply(text, file=hfile)
     os.remove(hfile)
+    await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
