@@ -55,6 +55,6 @@ def setting_menu(event):
 def list_menu(event):
     menu = [
         [Button.inline("• Check Accounts 🧮", data=f"checkaccs:{event.sender_id}"), Button.inline("• Get Sessions 📜", data=f"getaccs:{event.sender_id}")],
-        [Button.inline("• Remove Delets ⛔️", data=f"removedels:{event.sender_id}")]
+        [Button.inline("• Remove Deletes ⛔️", data=f"removedels:{event.sender_id}")]
     ]
     return menu
