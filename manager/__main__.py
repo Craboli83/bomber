@@ -1,4 +1,4 @@
-from . import bot, client, LOG_GROUP, ADMINS_ID
+from . import bot, LOG_GROUP, ADMINS_ID
 from manager.functions import load_plugins
 from manager.database import DB
 
@@ -44,4 +44,4 @@ async def setup():
     print("• Setup Completed!")
 
 bot.loop.run_until_complete(setup())
-client.run_until_disconnected()
+bot.run_until_disconnected()
