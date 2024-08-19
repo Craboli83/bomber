@@ -1,3 +1,4 @@
+from manager import *
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from manager.database import DB
@@ -31,8 +32,8 @@ async def TClient(session=None):
     try:
         client = TelegramClient(
             session=stringses,
-            api_id=13367220,
-            api_hash="52cdad8b941c04c0c85d28ed6b765825",
+            api_id=API_ID,
+            api_hash=API_HASH,
             device_model="POCO POCO X5 Pro 5G",
             system_version="1.0.5.0.UMSMIXM",
             app_version="11.0.0",
