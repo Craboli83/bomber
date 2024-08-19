@@ -58,13 +58,13 @@ def Cmd(
             if not event.is_private or event.out:
                 return
 
-            if admin_only and event.sender_id != bot.admin.id:
+            if admin_only and event.sender_id not in bot.admins:
                 return
             
             if not DB.get_key("VIP_USERS"):
                 DB.set_key("VIP_USERS", [])
 
-            if not event.sender_id == bot.admin.id:
+            if event.sender_id not in bot.admins:
                 vipusers = DB.get_key("VIP_USERS")
                 if event.sender_id not in vipusers:
                     return await event.reply(f"**⛔️ This Bot Is Only For Vip Users!**\n\n**💠 Contact Creator For Vip Added!**\n\n**💡 Maker: @TheAboli**", buttons=None)
@@ -72,16 +72,16 @@ def Cmd(
             if not DB.get_key("BLOCK_USERS"):
                 DB.set_key("BLOCK_USERS", [])
             
-            if not event.sender_id == bot.admin.id and event.sender_id in DB.get_key("BLOCK_USERS"):
+            if event.sender_id not in bot.admins and event.sender_id in DB.get_key("BLOCK_USERS"):
                 return await bot.send_message(LOG_GROUP, f"**#New_Message_From_Spam_User**\n\n**🆔 UserID:** ( `{event.sender_id}` )", buttons=[[Button.inline("UnBlock ✅", data=f"unblock:{event.sender_id}")]])
 
             if not DB.get_key("USER_SPAMS"):
                 DB.set_key("USER_SPAMS", {})
 
-            if not event.sender_id == bot.admin.id and (await is_spam(event)):
+            if event.sender_id not in bot.admins and (await is_spam(event)):
                 return
 
-            if not event.sender_id == bot.admin.id:
+            if event.sender_id not in bot.admins:
                 notsubs = await check_subs(event.sender_id)
                 if notsubs:
                     info = await bot.get_entity(event.sender_id)
@@ -91,7 +91,7 @@ def Cmd(
                         buttons.append([Button.url(notsubs[nsub], nsub)])
                     return await event.reply(text, buttons=buttons)
 
-            if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
+            if DB.get_key("BOT_STATUS") == "off" and event.sender_id not in bot.admins:
                 return await event.reply("**❌ Sorry, The Bot Has Been DeActived!**\n\n__❗ Please Try Again Later!__")
 
             if not DB.get_key("BOT_STATUS"):
