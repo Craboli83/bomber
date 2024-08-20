@@ -7,7 +7,7 @@ from manager.functions import get_flag
 import datetime
 
 @Cmd(pattern="Info Number ℹ️")
-async def unbannumber(event):
+async def infonumber(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**📜 Ok, Send Your Phone Number To Get Information For This:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id, timeout=60)
