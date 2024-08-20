@@ -5,6 +5,7 @@ from manager.database import DB
 from . import main_menu, back_menu
 from manager.functions import get_flag
 import datetime
+import random
 
 @Cmd(pattern="Info Number ℹ️")
 async def infonumber(event):
