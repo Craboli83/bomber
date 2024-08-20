@@ -14,7 +14,7 @@ except:
     print(f"• Error: {error}")
     
 try:
-    client = TelegramClient(
+    bot.client = TelegramClient(
         session=StringSession(SESSION),
         api_id=API_ID,
         api_hash=API_HASH,
