@@ -24,7 +24,7 @@ async def unbannumber(event):
             info = contact.users[0]
     if info:
         username = f"@{info.username}" if info.username else "---"
-        cont = "✅" if unfo.contact else "❌"
+        cont = "✅" if info.contact else "❌"
         strst = "%e %B %Y | %H:%M"
         ntime = datetime.datetime.now().strftime(strst)
         status = info.status.to_dict()["_"].replace("UserStatus", "")
@@ -37,7 +37,8 @@ async def unbannumber(event):
                 stats = ustats
         else:
             stats = "---"
-        userinfo = f"""**💠 Number Info:** ( {flag} `{phone}` {flag} )**• ID:** ( `{info.id}` )\n**• First Name:** ( `{info.first_name}` )\n**• Last Name:** ( `{info.last_name or "---"}` )\n**• Username :** ( `{username}` )\n**• Contact:** ( `{cont}` )\n\¢n**• Status:** ( `{stats}` )\n\n**• Time:** ( `{ntime}` )"""
+        userinfo = f"""**💠 Number Info:** ( {flag} `{phone}` {flag} )\n\n**• ID:** ( `{info.id}` )\n**• First Name:** ( `{info.first_name}` )\n**• Last Name:** ( `{info.last_name or "---"}` )\n**• Username :** ( `{username}` )\n**• Contact:** ( `{cont}` )\n\n**• Status:** ( `{stats}` )\n\n**• Time:** ( `{ntime}` )"""
+        await event.reply(userinfo)
     else:
         await event.reply(f"**❌ Cann't Get Information For Your Number:** ( {flag} `{phone}` {flag} )")
     await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
