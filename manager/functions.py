@@ -34,9 +34,6 @@ async def TClient(session=None):
             session=stringses,
             api_id=API_ID,
             api_hash=API_HASH,
-            device_model="POCO POCO X5 Pro 5G",
-            system_version="1.0.5.0.UMSMIXM",
-            app_version="11.0.0",
         )
     except:
         return False
