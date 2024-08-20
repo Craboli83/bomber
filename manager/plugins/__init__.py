@@ -11,7 +11,7 @@ def main_menu(event):
         [Button.text("My Info 📝", resize=True)],
         [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
     ]
-    if event.sender_id == bot.admin.id:
+    if event.sender_id in bot.admins:
         menu.append([Button.text("Admin Panel 🔐", resize=True)])
     return menu
 
