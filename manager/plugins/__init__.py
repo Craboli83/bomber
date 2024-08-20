@@ -6,8 +6,9 @@ def main_menu(event):
     menu = [
         [Button.text("Add Account 📥", resize=True), Button.text("Add Session 🔗", resize=True)],
         [Button.text("Fake Email 📨", resize=True)],
-        [Button.text("Account Settings ⚙️", resize=True), Button.text("Accounts List 📋", resize=True)],
-        [Button.text("Account Panel 🛠️", resize=True), Button.text("UnBan Number ♻️", resize=True)],
+        [Button.text("Accounts List 📋", resize=True), Button.text("Account Panel 🛠️", resize=True)],
+        [Button.text("Account Settings ⚙️", resize=True)],
+        [Button.text("Info Number️ ℹ️", resize=True), Button.text("UnBan Number ♻️", resize=True)],
         [Button.text("My Info 📝", resize=True)],
         [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
     ]
