@@ -34,6 +34,7 @@ async def TClient(session=None):
             session=stringses,
             api_id=API_ID,
             api_hash=API_HASH,
+            device_model="Manager 🔐",
         )
     except:
         return False
