@@ -5,12 +5,11 @@ from manager.database import DB
 def main_menu(event):
     menu = [
         [Button.text("Add Account 📥", resize=True), Button.text("Add Session 🔗", resize=True)],
+        [Button.text("Accounts List 📋", resize=True)],
+        [Button.text("Account Panel 🛠️", resize=True, Button.text("Account Settings ⚙️", resize=True))],
         [Button.text("Fake Email 📨", resize=True)],
-        [Button.text("Accounts List 📋", resize=True), Button.text("Account Panel 🛠️", resize=True)],
-        [Button.text("Account Settings ⚙️", resize=True)],
         [Button.text("Info Number ℹ️", resize=True), Button.text("UnBan Number ♻️", resize=True)],
-        [Button.text("My Info 📝", resize=True)],
-        [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
+        [Button.text("My Info 📝", resize=True), Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
     ]
     if event.sender_id in bot.admins:
         menu.append([Button.text("Admin Panel 🔐", resize=True)])
