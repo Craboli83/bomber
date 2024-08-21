@@ -16,7 +16,7 @@ async def yesedit(event):
     await event.edit("`♻️ Please Wait . . .`")
     flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
