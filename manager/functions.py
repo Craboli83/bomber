@@ -15,6 +15,8 @@ import importlib
 import glob
 import re
 
+ACCOUNTS = {}
+
 def load_plugins(folder):
     plugs = []
     notplugs = {}
@@ -27,11 +29,14 @@ def load_plugins(folder):
             notplugs.update({os.path.basename(file): format_exc()})
     return plugs, notplugs
 
-async def TClient(session=None):
-    stringses = StringSession(session) if session else StringSession()
+async def TClient(session, phone=None):
+	if phone and phone in ACCOUNTS:
+		client = ACCOUNTS[phone]
+		if (await client.get_me()):
+			return client
     try:
         client = TelegramClient(
-            session=stringses,
+            session=StringSession(session),
             api_id=API_ID,
             api_hash=API_HASH,
             device_model="Manager 🔐",
@@ -39,9 +44,12 @@ async def TClient(session=None):
     except:
         return False
     await client.connect()
-    if session and not (await client.get_me()):
+    if (await client.get_me()):
+    	if phone:
+    		ACCOUNTS[phone] = client
+        return client
+    else:
         return False
-    return client
 
 def get_flag(number):
     try:
