@@ -44,9 +44,9 @@ async def TClient(session, phone=None):
     except:
         return False
     await client.connect()
+    if phone:
+        ACCOUNTS[phone] = client
     if (await client.get_me()):
-        if phone:
-            ACCOUNTS[phone] = client
         return client
     else:
         return False
