@@ -24,12 +24,12 @@ def mobile():
         "POCO X5 Pro 5G",
         "POCO X6 Pro 5G",
         "Redmi K70 Ultra 5G",
-        "Xiaomi 15 Ultra 5G"
-        "IPhone 15 PRO MAX",
-        "IPhone 14 PRO MAX",
-        "SAMSUNG GALAXY S24 ULTRA 5G",
-        "SAMSUNG GALAXY S23 ULTRA 5G",
-        "SAMSUNG GALAXY S22 ULTRA 5G",
+        "Xiaomi 15 Ultra 5G",
+        "IPhone 15 Pro Max",
+        "IPhone 14 Pro Max",
+        "Samsung Galaxy S24 Ultra 5G",
+        "Samsung Galaxy S23 Ultra 5G",
+        "Samsung Galaxy S22 Ultra 5G",
     ]
     return random.choice(MOBILES)
 
