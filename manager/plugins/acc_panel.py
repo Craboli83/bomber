@@ -19,7 +19,7 @@ async def acc_panel(event):
         return await event.reply(f"**❗ You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**", buttons=main_menu(event))
     edit = await event.reply("`♻️ Please Wait . . .`")
     session = accs[phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await edit.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
