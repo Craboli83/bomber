@@ -7,9 +7,9 @@ import re
 import os
 import asyncio
 
-@Cmd(pattern="Admin Panel 🔐|/panel", admin_only=True)
+@Cmd(pattern="Admin Panel 🔐", admin_only=True)
 async def panel(event):
-    await event.reply(f"**👋 Hi {bot.admin.first_name}!**\n\n**💠 Welcome To Admin Panel!**\n\n__❗ Use This Buttons!__", buttons=panel_menu())
+    await event.reply("**👋 Hi Bot Admin!**\n\n**💠 Welcome To Your Panel!**\n\n__❗ Use This Buttons!__", buttons=panel_menu())
 
 @Callback(data="onoff")
 async def change_status(event):
