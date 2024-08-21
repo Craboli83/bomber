@@ -30,10 +30,10 @@ def load_plugins(folder):
     return plugs, notplugs
 
 async def TClient(session, phone=None):
-	if phone and phone in ACCOUNTS:
-		client = ACCOUNTS[phone]
-		if (await client.get_me()):
-		    return client
+    if phone and phone in ACCOUNTS:
+        client = ACCOUNTS[phone]
+        if (await client.get_me()):
+            return client
     try:
         client = TelegramClient(
             session=StringSession(session),
