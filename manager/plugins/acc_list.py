@@ -59,7 +59,7 @@ async def checkaccs(event):
         for acc in accs:
             flag = get_flag(acc)
             session = accs[acc]
-            client = await TClient(session)
+            client = await TClient(session, acc)
             status = "✅" if client else "❌"
             text += f"**{count} - {flag}** `{acc}` ( `{status}` )\n"
             count += 1
@@ -70,7 +70,7 @@ async def checkaccs(event):
         for acc in accs:
             flag = get_flag(acc)
             session = accs[acc]
-            client = await TClient(session)
+            client = await TClient(session, acc)
             status = "✅" if client else "❌"
             text += f"{count} - {flag} {acc} ( {status} )\n"
             count += 1
