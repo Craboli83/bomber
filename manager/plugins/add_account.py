@@ -1,4 +1,6 @@
-from manager import bot, LOG_GROUP
+from manager import bot, LOG_GROUP, API_ID, API_HASH
+from telethon.sync import TelegramClient
+from telethon.sessions import StringSession
 from manager.events import Cmd
 from telethon import Button
 from telethon.sessions import StringSession
@@ -31,7 +33,12 @@ async def add_account(event):
     if phone in DB.get_key("CMD_LIST"):
         return
     edit = await event.reply("`♻️ Please Wait . . .`")
-    client = await TClient()
+    client = TelegramClient(
+        session=StringSession(),
+        api_id=API_ID,
+        api_hash=API_HASH,
+        device_model="Manager 🔐",
+    )
     try:
         scode = await client.send_code_request(phone, force_sms=False)
         async with bot.conversation(event.chat_id) as conv:
