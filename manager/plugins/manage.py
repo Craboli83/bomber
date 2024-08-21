@@ -28,7 +28,7 @@ async def logout(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
@@ -49,7 +49,7 @@ async def getcodes(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
@@ -67,7 +67,7 @@ async def getcodes(event):
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
@@ -86,7 +86,7 @@ async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
@@ -121,7 +121,7 @@ async def getauths(event):
     hash = int(event.pattern_match.group(2).decode('utf-8'))
     flag = get_flag(phone)
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = await TClient(session)
+    client = await TClient(session, phone)
     if not client:
         buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
         return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
