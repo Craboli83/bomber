@@ -87,7 +87,7 @@ async def removedels(event):
     text = f"**🚫 Your Removed Accounts List:**\n\n"
     count = 0
     for acc in allaccs[userid].copy():
-        client = await TClient(allaccs[userid][acc])
+        client = await TClient(allaccs[userid][acc], acc)
         if not client:
             flag = get_flag(acc)
             allaccs[userid].pop(acc, None)
