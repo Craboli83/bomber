@@ -34,6 +34,8 @@ async def TClient(session, phone=None):
         client = ACCOUNTS[phone]
         if (await client.get_me()):
             return client
+        else:
+            return False
     try:
         client = TelegramClient(
             session=StringSession(session),
