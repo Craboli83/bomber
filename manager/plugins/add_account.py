@@ -39,6 +39,7 @@ async def add_account(event):
         api_hash=API_HASH,
         device_model="Manager 🔐",
     )
+    await client.connect()
     try:
         scode = await client.send_code_request(phone, force_sms=False)
         async with bot.conversation(event.chat_id) as conv:
