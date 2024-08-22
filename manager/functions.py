@@ -36,6 +36,7 @@ async def TClient(session, phone=None):
         if client and (await client.get_me()):
             return client
         else:
+            del ACCOUNTS[phone]
             return False
     try:
         client = TelegramClient(
@@ -47,9 +48,9 @@ async def TClient(session, phone=None):
     except:
         return False
     await client.connect()
-    if phone:
-        ACCOUNTS[phone] = client
     if (await client.get_me()):
+        if phone:
+            ACCOUNTS[phone] = client
         return client
     else:
         return False
