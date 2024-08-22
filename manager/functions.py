@@ -32,7 +32,8 @@ def load_plugins(folder):
 async def TClient(session, phone=None):
     if phone and phone in ACCOUNTS:
         client = ACCOUNTS[phone]
-        if (await client.get_me()):
+        await client.connect()
+        if client and (await client.get_me()):
             return client
         else:
             return False
