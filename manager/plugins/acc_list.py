@@ -16,7 +16,7 @@ async def myaccs(event):
     elif len(accs) < 100:
         text = f"**📋 Your Accounts List:**\n**💡 Count:** ( `{len(accs)}` )\n\n"
         count = 1
-        for acc in accs:
+        for acc in sorted(accs):
             flag = get_flag(acc)
             text += f"**{count} - {flag}** `{acc}`\n"
             count += 1
@@ -25,7 +25,7 @@ async def myaccs(event):
     else:
         text = f"📋 Your Accounts List:\n💡 Count: ( {len(accs)} )\n\n"
         count = 1
-        for acc in accs:
+        for acc in sorted(accs):
             flag = get_flag(acc)
             text += f"{count} - {flag} {acc}\n"
             count += 1
@@ -39,7 +39,7 @@ async def getaccs(event):
     userid = int(event.pattern_match.group(1).decode('utf-8'))
     accs = DB.get_key("USER_ACCS")[userid]
     text = f"💡 Count: ( {len(accs)} )\n\n"
-    for acc in accs:
+    for acc in sorted(accs):
         session = accs[acc]
         text += f"{acc} - {session}\n\n"
     fname = str(userid) + ".txt"
@@ -56,7 +56,7 @@ async def checkaccs(event):
     if len(accs) < 100:
         text = f"**📋 Your Accounts List With Status:**\n**💡 Count:** ( `{len(accs)}` )\n\n"
         count = 1
-        for acc in accs:
+        for acc in sorted(accs):
             flag = get_flag(acc)
             session = accs[acc]
             client = await TClient(session, acc)
@@ -67,7 +67,7 @@ async def checkaccs(event):
     else:
         text = f"📋 Your Accounts List With Status:\n💡 Count: ( {len(accs)} )\n\n"
         count = 1
-        for acc in accs:
+        for acc in sorted(accs):
             flag = get_flag(acc)
             session = accs[acc]
             client = await TClient(session, acc)
