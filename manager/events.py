@@ -141,7 +141,8 @@ def Cmd(
             try:
                 await func(event)
             except asyncio.exceptions.TimeoutError:
-                return await event.reply("**❌ Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
+                await event.reply("**❌ Your Last Request Has Been Canceled, Try Again!**")
+                return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
             except telethon.errors.common.AlreadyInConversationError:
                 return
             except:
