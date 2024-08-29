@@ -12,7 +12,7 @@ def main_menu():
     return menu
 
 back_menu = [
-    [Button.text("Back 🔙", resize=True)],
+    [Button.text("🔙", resize=True)],
 ]
 
 def manage_menu(phone):
