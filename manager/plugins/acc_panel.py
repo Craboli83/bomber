@@ -16,7 +16,7 @@ async def acc_panel(event):
     if phone in DB.get_key("CMD_LIST"):
         return
     if phone not in accs:
-        return await event.reply(f"**❗ You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**", buttons=main_menu(event))
+        return await event.reply(f"**❗ You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**", buttons=main_menu())
     edit = await event.reply("`♻️ Please Wait . . .`")
     session = accs[phone]
     client = await TClient(session, phone)
@@ -34,4 +34,4 @@ __❗ Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+    await event.respond("**♻️ Main Menu:**", buttons=main_menu())
