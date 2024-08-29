@@ -12,4 +12,4 @@ async def start(event):
 
 @Cmd(pattern="Back 🔙")
 async def back(event):
-    await event.reply("**♻️ Backed To Main Menu!**", buttons=main_menu(event))
+    await event.reply("**♻️ Backed To Main Menu!**", buttons=main_menu())
