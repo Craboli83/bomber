@@ -25,7 +25,6 @@ def Cmd(
 
     if pattern and pattern not in bot.COMMANDS:
         bot.COMMANDS.append(pattern)
-    pattern = f"(?i)^\{pattern}$"
 
     def decorator(func):
         async def wrapper(event):
