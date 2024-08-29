@@ -26,7 +26,7 @@ import glob
 @Cmd(pattern="Add Account 📥")
 async def add_account(event):
     async with bot.conversation(event.chat_id) as conv:
-        send = await event.reply("**📱 Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
+        send = await event.respond("**📱 Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
         phone = response.text
     flag = get_flag(phone)
@@ -109,7 +109,7 @@ async def add_account(event):
 @Cmd(pattern="Add Session 🔗")
 async def add_session(event):
     async with bot.conversation(event.chat_id) as conv:
-        send = await event.reply("**🧬 Ok, Send Your Telethon Session String:**", buttons=back_menu)
+        send = await event.respond("**🧬 Ok, Send Your Telethon Session String:**", buttons=back_menu)
         response = await conv.get_response(send.id)
         session = response.text
     if session in DB.get_key("CMD_LIST"):
