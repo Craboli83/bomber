@@ -2,24 +2,9 @@ from . import bot, LOG_GROUP, ADMINS_ID
 from manager.functions import load_plugins
 from manager.database import DB
 
-CMDS = [
-    "My Info 📝",
-    "Accounts List 📋",
-    "Support 🧒",
-    "Account Panel 🛠️",
-    "/start",
-    "🔙",
-    "Admin Panel 🔐",
-    "Guide 💡",
-    "Account Settings ⚙️",
-    "Add Account 📥",
-    "Add Session 🔗",
-    "Admin Panel 🔐",
-    "/panel",
-]
-
 async def setup():
     print("• Installing Plugins ...")
+    bot.COMMANDS = []
     plugs, notplugs = load_plugins("manager/plugins/")
     print(f"• Successfully Installed {len(plugs)} Plugin From Main Plugins!")
     print(f"• Not Installed {len(notplugs)} Plugin From Main Plugins!")
@@ -40,7 +25,6 @@ async def setup():
         await send.reply(file=file)
     bot.me = await bot.get_me()
     bot.admins = ADMINS_ID
-    DB.set_key("CMD_LIST", CMDS)
     print("• Setup Completed!")
 
 bot.loop.run_until_complete(setup())
