@@ -5,16 +5,10 @@ from manager.database import DB
 from . import main_menu, back_menu
 from manager.functions import get_flag
 import datetime
-import random
 
-@Cmd(pattern="Info Number ℹ️")
+@Cmd(pattern="\\/NInfo (.*)")
 async def infonumber(event):
-    async with bot.conversation(event.chat_id) as conv:
-        send = await event.reply("**📜 Ok, Send Your Phone Number To Get Information For This:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
-        response = await conv.get_response(send.id, timeout=60)
-        phone = response.text
-    if phone in DB.get_key("CMD_LIST"):
-        return
+    phone = str(event.pattern_match.group(1))
     flag = get_flag(phone)
     info = None
     try:
@@ -28,7 +22,6 @@ async def infonumber(event):
         cont = "✅" if info.contact else "❌"
         strst = "%e %B %Y | %H:%M"
         ntime = datetime.datetime.now().strftime(strst)
-        status = info.status.to_dict()["_"].replace("UserStatus", "")
         if info.status:
             ustats = info.status.to_dict()["_"].replace("UserStatus", "")
             if ustats == "Offline":
@@ -41,5 +34,4 @@ async def infonumber(event):
         userinfo = f"""**💠 Number Info:** ( {flag} `{phone}` {flag} )\n\n**• ID:** ( `{info.id}` )\n**• First Name:** ( `{info.first_name}` )\n**• Last Name:** ( `{info.last_name or "---"}` )\n**• Username :** ( `{username}` )\n**• Contact:** ( `{cont}` )\n\n**• Status:** ( `{stats}` )\n\n**• Time:** ( `{ntime}` )"""
         await event.reply(userinfo)
     else:
-        await event.reply(f"**❌ Cann't Get Information For Your Number:** ( {flag} `{phone}` {flag} )")
-    await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        await event.reply(f"**❌ Can't Get Information For Your Number:** ( {flag} `{phone}` {flag} )")
