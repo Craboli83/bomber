@@ -72,7 +72,7 @@ async def logout(event):
     del allaccs[event.sender_id][phone]
     DB.set_key("USER_ACCS", allaccs)
     await event.edit(f"**✅ This Account Successfuly Deleted From Accounts List!**\n\n**📱 Account Number:** ( {flag} `{phone}` {flag} )")
-    await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+    await event.respond("**♻️ Main Menu:**", buttons=main_menu())
 
 @Callback(data="logout:(.*)")
 async def logout(event):
