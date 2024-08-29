@@ -7,7 +7,7 @@ import re
 import os
 import asyncio
 
-@Cmd(pattern="Admin Panel 🔐", admin_only=True)
+@Cmd(pattern="\\/panel", admin_only=True)
 async def panel(event):
     await event.reply("**👋 Hi Bot Admin!**\n\n**💠 Welcome To Your Panel!**\n\n__❗ Use This Buttons!__", buttons=panel_menu())
 
@@ -56,19 +56,19 @@ async def sendtouser(event):
 @Callback(data="getusers")
 async def getuserslist(event):
     users = DB.get_key("BOT_USERS")
-    acccount = DB.get_key("USER_ACCS_COUNT")
+    acccount = DB.get_key("USER_ACCS")
     if len(users) < 100:
         text = f"**📝 Bot Users:** ( `{len(users)}` )\n\n"
         count = 1
         for user in users:
-            text += f"**{count} -** `{user}` ( `{acccount[user]}` )\n"
+            text += f"**{count} -** `{user}` ( `{len(acccount[user])}` )\n"
             count += 1
         await event.reply(text)
     else:
         text = f"📝 Bot Users: ( {len(users)} )\n\n"
         count = 1
         for user in users:
-            text += f"{count} - {user} ( {acccount[user]} )\n"
+            text += f"{count} - {user} ( {len(acccount[user])} )\n"
             count += 1
         open("users.txt", "w").write(text)
         await event.reply("**📝 Bot Users!**", file="users.txt") 
