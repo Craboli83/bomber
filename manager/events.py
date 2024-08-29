@@ -23,7 +23,7 @@ def Cmd(
     **kwargs,
 ):
 
-    if pattern and pattern not in client.COMMANDS:
+    if pattern and pattern not in bot.COMMANDS:
         bot.COMMANDS.append(pattern)
     pattern = f"(?i)^\{pattern}$"
 
