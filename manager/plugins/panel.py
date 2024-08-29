@@ -32,7 +32,7 @@ async def sendtoall(event):
         await bot.send_message(int(user), response)
         count += 1
         await asyncio.sleep(0.2)
-    await response.reply(f"**✅ Your Message Successfuly Sended To** `{count}` **User From** `{len(users)}` **Users!**", buttons=main_menu(event))
+    await response.reply(f"**✅ Your Message Successfuly Sended To** `{count}` **User From** `{len(users)}` **Users!**", buttons=main_menu())
 
 @Callback(data="sendtouser")
 async def sendtouser(event):
@@ -44,14 +44,14 @@ async def sendtouser(event):
     if userid in DB.get_key("CMD_LIST"):
         return
     if userid not in users:
-    	return await response.reply(f"**❌ The User** ( `{userid}` ) **Is Not Available!**", buttons=main_menu(event))
+    	return await response.reply(f"**❌ The User** ( `{userid}` ) **Is Not Available!**", buttons=main_menu())
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply(f"**💡 Please Send Your Message To Be Sent For User:** ( `{userid}` )", buttons=back_menu)
         response = await conv.get_response(send.id, timeout=60)
     if response.text in DB.get_key("CMD_LIST"):
         return
     await bot.send_message(userid, response)
-    await response.reply(f"**✅ Your Message Successfuly Sended To User:** ( `{userid}` )", buttons=main_menu(event))
+    await response.reply(f"**✅ Your Message Successfuly Sended To User:** ( `{userid}` )", buttons=main_menu())
 
 @Callback(data="getusers")
 async def getuserslist(event):
@@ -83,7 +83,7 @@ async def getuaccs(event):
         return
     accs = DB.get_key("USER_ACCS")[event.sender_id]
     if len(accs) == 0:
-        return await event.reply(f"**📋 User** ( `{userid}` ) **Is Not Added Account To Bot!**", buttons=main_menu(event))
+        return await event.reply(f"**📋 User** ( `{userid}` ) **Is Not Added Account To Bot!**", buttons=main_menu())
     text = f"💡 Count: ( {len(accs)} )\n\n"
     for acc in accs:
         session = accs[acc]
@@ -91,7 +91,7 @@ async def getuaccs(event):
     fname = str(userid) + ".txt"
     open(fname, "w").write(text)
     text = f"**📋 User** ( `{userid}` ) **Accounts List!**\n\n**💡 Count:** ( `{len(accs)}` )"
-    await event.reply(text, file=fname, buttons=main_menu(event))
+    await event.reply(text, file=fname, buttons=main_menu())
     os.remove(fname)
     
 @Callback(data="addvip")
@@ -106,8 +106,8 @@ async def addvip(event):
     if userid not in vipusers:
         vipusers.append(userid)
     DB.set_key("VIP_USERS", vipusers)
-    await response.reply(f"**✅ User** ( `{userid}` ) **Was Added To Vip Users!**", buttons=main_menu(event))
-    await bot.send_message(userid, "**✅ You Are Added To Vip Users By Admin!**", buttons=main_menu(event))
+    await response.reply(f"**✅ User** ( `{userid}` ) **Was Added To Vip Users!**", buttons=main_menu())
+    await bot.send_message(userid, "**✅ You Are Added To Vip Users By Admin!**", buttons=main_menu())
 
 @Callback(data="delvip")
 async def delvip(event):
@@ -121,5 +121,5 @@ async def delvip(event):
     if userid in vipusers:
         vipusers.remove(userid)
     DB.set_key("VIP_USERS", vipusers)
-    await response.reply(f"**❌ User** ( `{userid}` ) **Was Deleted From Vip Users!**", buttons=main_menu(event))
-    await bot.send_message(userid, "**❌ You Are Deleted From Vip Users By Admin!**", buttons=main_menu(event))
+    await response.reply(f"**❌ User** ( `{userid}` ) **Was Deleted From Vip Users!**", buttons=main_menu())
+    await bot.send_message(userid, "**❌ You Are Deleted From Vip Users By Admin!**", buttons=main_menu())
