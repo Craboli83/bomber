@@ -33,7 +33,7 @@ def mobile():
     ]
     return random.choice(MOBILES)
 
-@Cmd(pattern="\\/UnBan (.*)")
+@Cmd(pattern="/unban (.*)")
 async def unbannumber(event):
     phone = str(event.pattern_match.group(1))
     flag = get_flag(phone)
