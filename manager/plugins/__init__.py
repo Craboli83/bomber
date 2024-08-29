@@ -29,8 +29,9 @@ def panel_menu():
     status = "✅" if DB.get_key("BOT_STATUS") == "on" else "❌"
     menu = [
         [Button.inline(f"{status} Bot Status {status}", data="onoff")],
+        [Button.inline("📝 Get Users 📝", data="getusers")],
         [Button.inline("📤 Send To All 📤", data="sendtoall"), Button.inline("📤 Send To User 📤", data="sendtouser")],
-        [Button.inline("📝 Get Users 📝", data="getusers"), Button.inline("🧬 Get Accounts 🧬", data="getuaccs")],
+        [Button.inline("🧬 Get Accounts 🧬", data="getuaccs")],
         [Button.inline("✅ Add Vip 👑", data="addvip"), Button.inline("❌ Del Vip 👑", data="delvip")],
     ]
     return menu
