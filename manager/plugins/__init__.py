@@ -2,7 +2,7 @@ from manager import bot
 from telethon import Button
 from manager.database import DB
 
-def main_menu(event):
+def main_menu():
     menu = [
         [Button.text("Add Account 📥", resize=True), Button.text("Add Session 🔗", resize=True)],
         [Button.text("Accounts List 📋", resize=True)],
@@ -10,8 +10,6 @@ def main_menu(event):
         [Button.text("My Info 📝", resize=True)],
         [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
     ]
-    if event.sender_id in bot.admins:
-        menu.append([Button.text("/panel", resize=True)])
     return menu
 
 back_menu = [
