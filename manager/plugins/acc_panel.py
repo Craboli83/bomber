@@ -10,14 +10,14 @@ from manager.functions import get_flag
 async def acc_panel(event):
     accs = DB.get_key("USER_ACCS")[event.sender_id]
     async with bot.conversation(event.chat_id) as conv:
-        send = await event.reply("**📱 Ok, Send Your Phone Number To Get Panel For This:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
+        send = await event.respond("**📱 Ok, Send Your Phone Number To Get Panel For This:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id, timeout=60)
         phone = response.text
     if phone in DB.get_key("CMD_LIST"):
         return
     if phone not in accs:
         return await event.reply(f"**❗ You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**", buttons=main_menu())
-    edit = await event.reply("`♻️ Please Wait . . .`")
+    edit = await event.respond("`♻️ Please Wait . . .`")
     session = accs[phone]
     client = await TClient(session, phone)
     if not client:
