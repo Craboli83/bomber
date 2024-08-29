@@ -1,12 +1,63 @@
 from manager import bot, LOG_GROUP
 from . import main_menu
 from manager.events import Callback
-from telethon import functions, Button
-from manager.functions import TClient
+from telethon import functions, types, Button
+from manager.functions import TClient, get_flag
 from manager.database import DB
-from manager.functions import get_flag
+import faker
+import random
 import re
 import os
+
+@Callback(data="editacc:(.*)")
+async def editacc(event):
+    phone = str(event.pattern_match.group(1).decode('utf-8'))
+    await event.edit("`♻️ Please Wait . . .`")
+    flag = get_flag(phone)
+    session = DB.get_key("USER_ACCS")[event.sender_id][phone]
+    client = await TClient(session, phone)
+    if not client:
+        buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
+        return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
+    await client.connect()
+    fake = faker.Faker(faker.config.AVAILABLE_LOCALES)
+    profile = fake.simple_profile()
+    if DB.get_key("CHANGE_ACCS_NAME")[event.sender_id] == "yes":
+        if DB.get_key("CHANGE_ACCS_FLAG")[event.sender_id] == "yes":
+            fname = str(flag) + " " + profile["name"] + " " + str(flag)
+        else:
+            fname = profile["name"]
+        try:
+            await client(functions.account.UpdateProfileRequest(first_name=fname, last_name=""))
+        except:
+            pass
+    if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
+        try:
+            await client(functions.account.UpdateProfileRequest(about=fake.text().split(".")[0]))
+        except:
+            pass
+    if DB.get_key("CHANGE_ACCS_BIRTH")[event.sender_id] == "yes":
+        try:
+            date = str(profile["birthdate"])
+            date = date.split("-")
+            year, month, day = int(date[0]), int(date[1]), int(date[2])
+            await client(functions.account.UpdateBirthdayRequest(birthday=types.Birthday(day=day, month=month, year=year)))
+        except:
+            pass
+    if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
+        try:
+            title = random.choice(["men", "women", "boy", "girl", "mens", "womens", "men persian", "women persian"])
+            query = await client.inline_query("Pic", title)
+            number = random.randint(0, 30)
+            message = await query[number].click("me")
+            pic = await message.download_media()
+            file = await client.upload_file(pic)
+            await client(functions.photos.UploadProfilePhotoRequest(file=file))
+            os.remove(pic)
+            await message.delete()
+        except:
+            pass
+    await event.edit(f"**✅ Your Account Successfuly Edited!**\n\n**📱 Phone:** ( {flag} `{phone}` {flag} )")
 
 @Callback(data="delacc:(.*)")
 async def logout(event):
