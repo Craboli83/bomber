@@ -50,7 +50,7 @@ async def getemail():
     else:
         return await getemail()
     
-@Cmd(pattern="Fake Email 📨")
+@Cmd(pattern="\\/Email")
 async def fakeemail(event):
     edit = await event.reply("`♻️ Please Wait . . .`")
     mail = await getemail()
@@ -67,7 +67,7 @@ async def getemailcode(event):
     session = str(event.pattern_match.group(1).decode('utf-8'))
     inbox = Email(session).inbox()
     if not inbox:
-        return await event.answer("❌ Telegram Code Is Not Received!", alert=True)
+        return await event.edit("**❌ Sorry, This Email Is Not Available Now!**")
     msg = inbox["topic"]
     if inbox["from"] == "noreply@telegram.org" and re.search("Your Code \\- (\\d*)", msg):
         code = re.search("Your Code \\- (\\d*)", msg).group(1)
