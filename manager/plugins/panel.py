@@ -7,7 +7,7 @@ import re
 import os
 import asyncio
 
-@Cmd(pattern="\\/panel", admin_only=True)
+@Cmd(pattern="/panel", admin_only=True)
 async def panel(event):
     await event.reply("**👋 Hi Bot Admin!**\n\n**💠 Welcome To Your Panel!**\n\n__❗ Use This Buttons!__", buttons=panel_menu())
 
