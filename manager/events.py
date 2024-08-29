@@ -23,6 +23,9 @@ def Cmd(
     **kwargs,
 ):
 
+    if pattern and pattern not in client.COMMANDS:
+        bot.COMMANDS.append(pattern)
+
     def decorator(func):
         async def wrapper(event):
 
