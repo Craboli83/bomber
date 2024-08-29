@@ -1,40 +1,11 @@
 from . import bot, LOG_GROUP, CHANNELS
 from telethon import events, functions, Button
+from telethon.errors.common import AlreadyInConversationError
 from manager.database import DB
 from traceback import format_exc
 from manager.plugins import main_menu
-import os
-import sys
 import re
 import asyncio
-import time
-import telethon
-
-async def is_spam(event):
-    spams = DB.get_key("USER_SPAMS")
-    ban = 60
-    max = 5
-    msgs = 8
-    user_id = event.sender_id
-    if user_id not in spams:
-        spams[user_id] = {"next_time": int(time.time()) + max, "messages": 1, "banned": 0}
-        usr = spams[user_id]
-    else:
-        usr = spams[user_id]
-        usr["messages"] += 1
-    if usr["banned"] >= int(time.time()):
-        return True
-    else:
-        if usr["next_time"] >= int(time.time()):
-            if usr["messages"] >= msgs:
-                spams[user_id]["banned"] = time.time() + ban
-                await event.reply(f"**🚫 You Are Spamed In Bot And Blocked, Try Again Later!**")
-                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**🆔 UserID:** ( `{user_id}` )", buttons=[[Button.inline("Block 🚫", data=f"block:{event.sender_id}")]])
-                return True
-        else:
-            spams[user_id]["messages"] = 1
-            spams[user_id]["next_time"] = int(time.time()) + max
-            return False
 
 async def check_subs(userid):
     notsubs = {}
@@ -69,18 +40,6 @@ def Cmd(
                 if event.sender_id not in vipusers:
                     return await event.reply(f"**⛔️ This Bot Is Only For Vip Users!**\n\n**💠 Contact Creator For Vip Added!**\n\n**💡 Maker: @TheAboli**", buttons=None)
 
-            if not DB.get_key("BLOCK_USERS"):
-                DB.set_key("BLOCK_USERS", [])
-            
-            if event.sender_id not in bot.admins and event.sender_id in DB.get_key("BLOCK_USERS"):
-                return await bot.send_message(LOG_GROUP, f"**#New_Message_From_Spam_User**\n\n**🆔 UserID:** ( `{event.sender_id}` )", buttons=[[Button.inline("UnBlock ✅", data=f"unblock:{event.sender_id}")]])
-
-            if not DB.get_key("USER_SPAMS"):
-                DB.set_key("USER_SPAMS", {})
-
-            if event.sender_id not in bot.admins and (await is_spam(event)):
-                return
-
             if event.sender_id not in bot.admins:
                 notsubs = await check_subs(event.sender_id)
                 if notsubs:
@@ -102,11 +61,6 @@ def Cmd(
                 BOT_USERS.append(event.sender_id)
                 DB.set_key("BOT_USERS", BOT_USERS)
                 await bot.send_message(LOG_GROUP, f"**#New_User**\n\n**🆔 UserID:** ( `{event.sender_id}` )")
-
-            USER_ACCS_COUNT = DB.get_key("USER_ACCS_COUNT") or {}
-            if event.sender_id not in USER_ACCS_COUNT:                 
-                USER_ACCS_COUNT.update({event.sender_id: 0})
-                DB.set_key("USER_ACCS_COUNT", USER_ACCS_COUNT)
 
             USER_ACCS = DB.get_key("USER_ACCS") or {}
             if event.sender_id not in USER_ACCS:                 
@@ -142,8 +96,8 @@ def Cmd(
                 await func(event)
             except asyncio.exceptions.TimeoutError:
                 await event.reply("**❌ Your Last Request Has Been Canceled, Try Again!**")
-                return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
-            except telethon.errors.common.AlreadyInConversationError:
+                return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
+            except AlreadyInConversationError:
                 return
             except:
                 error = format_exc()
