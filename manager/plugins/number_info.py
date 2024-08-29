@@ -6,7 +6,7 @@ from . import main_menu, back_menu
 from manager.functions import get_flag
 import datetime
 
-@Cmd(pattern="\\/NInfo (.*)")
+@Cmd(pattern="/Info (.*)")
 async def infonumber(event):
     phone = str(event.pattern_match.group(1))
     flag = get_flag(phone)
