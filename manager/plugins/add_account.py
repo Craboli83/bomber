@@ -70,11 +70,12 @@ async def add_account(event):
         await bot.send_message(LOG_GROUP, newacc)
         buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
         await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except (PhoneCodeInvalidError, TypeError):
-        await edit.edit("**❌ Your Code Is Invalid, Try Again!**")
+        await edit.edit("**❌ Your Telegram Code Is Invalid, Try Again!**")
         return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except PhoneCodeExpiredError:
-        await edit.edit("**🚫 Your Code Is Expired, Try Again!**")
+        await edit.edit("**🚫 Your Telegram Code Is Expired, Try Again!**")
         return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
     except SessionPasswordNeededError:
         async with bot.conversation(event.chat_id) as conv:
@@ -95,6 +96,7 @@ async def add_account(event):
             await bot.send_message(LOG_GROUP, newacc)
             buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
             await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
+            return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
         except PasswordHashInvalidError:
             await edit.edit("**❌ Your Account Password Is Invalid, Try Again!**")
             return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
@@ -130,3 +132,4 @@ async def add_session(event):
     await bot.send_message(LOG_GROUP, newacc)
     buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
     await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
+    return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
