@@ -32,7 +32,7 @@ async def add_account(event):
     flag = get_flag(phone)
     if phone in DB.get_key("CMD_LIST"):
         return
-    edit = await event.reply("`♻️ Please Wait . . .`")
+    edit = await event.respond("`♻️ Please Wait . . .`")
     client = TelegramClient(
         session=StringSession(),
         api_id=API_ID,
@@ -50,14 +50,14 @@ async def add_account(event):
             return
     except (PhoneNumberInvalidError, TypeError):
         await edit.edit("**❌ Your Phone Number Is Invalid!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     except PhoneNumberFloodError:
         await edit.edit("**❓ Your Phone Number Is Flooded!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     except PhoneNumberBannedError:
         await edit.edit("**🚫 Your Phone Number Is Banned!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
-    edit = await event.reply("`♻️ Please Wait . . .`")
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
+    edit = await event.respond("`♻️ Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
         await client.sign_in(phone=phone, code=phone_code, password=None)
@@ -70,13 +70,13 @@ async def add_account(event):
         await bot.send_message(LOG_GROUP, newacc)
         buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
         await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     except (PhoneCodeInvalidError, TypeError):
         await edit.edit("**❌ Your Telegram Code Is Invalid, Try Again!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     except PhoneCodeExpiredError:
         await edit.edit("**🚫 Your Telegram Code Is Expired, Try Again!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     except SessionPasswordNeededError:
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**🔐 Ok, Send Your Account 2Fa Password For Your Phone:** ( {flag} `{phone}` {flag} )")
@@ -84,7 +84,7 @@ async def add_account(event):
             password = response.text
         if password in DB.get_key("CMD_LIST"):
             return
-        edit = await event.reply("`♻️ Please Wait . . .`")
+        edit = await event.respond("`♻️ Please Wait . . .`")
         try:
             await client.sign_in(password=password)
             session = client.session.save()
@@ -96,13 +96,13 @@ async def add_account(event):
             await bot.send_message(LOG_GROUP, newacc)
             buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
             await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
-            return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+            return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
         except PasswordHashInvalidError:
             await edit.edit("**❌ Your Account Password Is Invalid, Try Again!**")
-            return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+            return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
         except Exception as error:
             await edit.edit(error)
-            return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+            return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     except Exception as error:
         return await edit.edit(error)
 
@@ -114,16 +114,16 @@ async def add_session(event):
         session = response.text
     if session in DB.get_key("CMD_LIST"):
         return
-    edit = await event.reply("`♻️ Please Wait . . .`")
+    edit = await event.respond("`♻️ Please Wait . . .`")
     client = await TClient(session)
     if not client:
         await edit.edit("**❌ Your Telethon Session String Is Invalid!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     myinfo = await client.get_me()
     phone = "+" + str(myinfo.phone)
     if not phone:
         await edit.edit("**❌ Your Telethon Session String Is Not For A Account!**")
-        return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+        return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
     flag = get_flag(phone)
     allaccs = DB.get_key("USER_ACCS")
     allaccs[event.sender_id][phone] = session
@@ -132,4 +132,4 @@ async def add_session(event):
     await bot.send_message(LOG_GROUP, newacc)
     buttons = [[Button.inline("✏️ Edit Account ✏️", data=f"editacc:{phone}")]]
     await edit.edit(f"**✅ Successfuly Login To Your Account!**\n\n {flag} `{phone}` {flag} \n\n** ❓Do You Want To Edit Your Account?**", buttons=buttons)
-    return await event.respond("**♻️ Main Menu:**", buttons=main_menu(event))
+    return await event.respond("**♻️ Main Menu:**", buttons=main_menu())
