@@ -50,7 +50,7 @@ async def getemail():
     else:
         return await getemail()
     
-@Cmd(pattern="\\/Email")
+@Cmd(pattern="\\/email")
 async def fakeemail(event):
     edit = await event.reply("`♻️ Please Wait . . .`")
     mail = await getemail()
