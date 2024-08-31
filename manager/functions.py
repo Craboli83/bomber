@@ -33,13 +33,9 @@ async def TClient(session, phone=None):
     if phone and phone in ACCOUNTS:
         client = ACCOUNTS[phone]
         await client.connect()
-        if client:
-            try:
-                await client.get_me()
-                return client
-            except:
-                del ACCOUNTS[phone]
-                return False
+        getme = await client.get_me()
+        if client and getme:
+            return client
         else:
             del ACCOUNTS[phone]
             return False
@@ -50,17 +46,17 @@ async def TClient(session, phone=None):
             api_hash=API_HASH,
             device_model="Manager 🔐",
         )
-        await client.connect()
     except:
         return False
-    try:
-        await client.get_me()
+    await client.connect()
+    getme = await client.get_me()
+    if client and getme:
         if phone:
             ACCOUNTS[phone] = client
         return client
-    except:
+    else:
         return False
-
+        
 def get_flag(number):
     try:
         pn = phonenumbers.parse(str(number))
