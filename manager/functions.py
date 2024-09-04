@@ -33,7 +33,11 @@ async def TClient(session, phone=None):
     if phone and phone in ACCOUNTS:
         client = ACCOUNTS[phone]
         await client.connect()
-        getme = await client.get_me()
+        try:
+            getme = await client.get_me()
+        except:
+            del ACCOUNTS[phone]
+            return False
         if client and getme:
             return client
         else:
