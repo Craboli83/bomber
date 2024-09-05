@@ -32,8 +32,8 @@ def load_plugins(folder):
 async def TClient(session, phone=None):
     if phone and phone in ACCOUNTS:
         client = ACCOUNTS[phone]
-        await client.connect()
         try:
+            await client.connect()
             getme = await client.get_me()
         except:
             del ACCOUNTS[phone]
