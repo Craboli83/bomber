@@ -74,7 +74,7 @@ class RedisDB:
 
 class Database:
     def __init__(self):
-        self.dbname = "../tmp/FidoDB.json"
+        self.dbname = "../tmp/Manager.json"
         self.cache = {}
         self.re_data()
 
@@ -164,4 +164,4 @@ class LocalDB:
             data = value
         return data
 
-DB = RedisDB()
+DB = LocalDB()
